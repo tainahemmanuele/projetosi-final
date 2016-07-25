@@ -1,12 +1,28 @@
-@()
 
-@main("Welcome to Play") {
-    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+@(listaUsuarios: List[Usuario])
 
-    <ul id="persons"></ul>
+    @main("Exemplo SI1") {
+        <h2>Lista de Usuarios </h2>
 
-    <form method="POST" action="@routes.Application.addPerson()">
-        <input type="text" name="name"/>
-        <button>Add Person</button>
-    </form>
-}
+        <table border="1">
+            <tr>
+                <th>Nome</th>
+                <th>Senha</th>
+            </tr>
+            @for(usuario <- listaUsuarios) {
+                <tr>
+                    <td><a href="@routes.Application.usuario(usuario.getEmail)">@usuario.getUsername</a></td>
+                    <td>@usuario.getEmail</td>
+                </tr>
+            }
+        </table>
+
+        <h2>Cadastrar Pessoa</h2>
+
+        <form method="POST" action="@routes.Application.addUsuario()">
+    <input type="text" name="nome" placeholder="Nome"/> <br>
+    <input type="text" name="cpf" placeholder="CPF"/> <br>
+    <button type="submit">Cadastrar</button>
+</form>
+
+    }
