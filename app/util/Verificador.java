@@ -7,7 +7,7 @@ public class Verificador {
     public Verificador() {
     }
 
-    public String verificaUsername(String username) throws Exception{
+    public static String verificaUsername(String username) throws Exception{
         if(username.equals("")) {
             throw new Exception("Username nao pode ser vazio");
         }
@@ -18,7 +18,7 @@ public class Verificador {
         }
     }
 
-    public String verificaEmail(String email) throws Exception {
+    public static String verificaEmail(String email) throws Exception {
         if (((email.endsWith(".com") || (email.endsWith(".com.br"))) && (email
                 .matches("(.*)@(.*)")) == true)) {
             return email;
@@ -27,7 +27,7 @@ public class Verificador {
         }
     }
 
-    public String verificaSenha(String senha) throws Exception {
+    public static String verificaSenha(String senha) throws Exception {
         if (senha.equals("")) {
             throw new Exception(
                     "Senha nao pode ser vazia");

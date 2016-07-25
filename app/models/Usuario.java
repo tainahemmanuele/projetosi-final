@@ -9,20 +9,20 @@ public class Usuario {
     private String username;
     private String email;
     private String senha;
-    private Verificador verifica = new Verificador();
 
     public Usuario(String username, String email, String senha) throws  Exception {
-        this.username = verifica.verificaUsername(username);
-        this.email = verifica.verificaEmail(email);
-        this.senha =verifica.verificaSenha(senha);
+        this.username = Verificador.verificaUsername(username);
+        this.email = Verificador.verificaEmail(email);
+        this.senha = Verificador.verificaSenha(senha);
     }
+
 
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) throws Exception{
-        this.username =  verifica.verificaUsername(username);
+        this.username =  Verificador.verificaUsername(username);
     }
 
     public String getEmail() {
@@ -30,7 +30,7 @@ public class Usuario {
     }
 
     public void setEmail(String email) throws Exception{
-        this.email = verifica.verificaEmail(email);
+        this.email = Verificador.verificaEmail(email);
     }
 
     public String getSenha() {
@@ -38,7 +38,7 @@ public class Usuario {
     }
 
     public void setSenha(String senha) throws Exception {
-        this.senha = verifica.verificaSenha(senha);
+        this.senha = Verificador.verificaSenha(senha);
     }
 
 }
