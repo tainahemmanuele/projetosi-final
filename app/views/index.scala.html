@@ -1,28 +1,25 @@
 
 @(listaUsuarios: List[Usuario])
 
-    @main("Exemplo SI1") {
-        <h2>Lista de Usuarios </h2>
+    @main("TextDropBox") {
 
-        <table border="1">
-            <tr>
-                <th>Nome</th>
-                <th>Senha</th>
-            </tr>
-            @for(usuario <- listaUsuarios) {
-                <tr>
-                    <td><a href="@routes.Application.usuario(usuario.getEmail)">@usuario.getUsername</a></td>
-                    <td>@usuario.getEmail</td>
-                </tr>
-            }
-        </table>
+        <h2 style="font-family: Calibri">Cadastro</h2>
 
-        <h2>Cadastrar Pessoa</h2>
-
-        <form method="POST" action="@routes.Application.addUsuario()">
-    <input type="text" name="nome" placeholder="Nome"/> <br>
-    <input type="text" name="cpf" placeholder="CPF"/> <br>
-    <button type="submit">Cadastrar</button>
+        <form method="POST" action="@routes.Application.cadastraUsuario()">
+            <div>
+            <label style="font-family: Calibri">Nome:</label>
+            <input type="text" name="nome:" placeholder="nome" style="font-family: Calibri"/> <br>
+            </div>
+            <div>
+            <label style="font-family: Calibri">Email:</label>
+            <input type="text" name="email:" placeholder="email" style="font-family: Calibri"/> <br>
+            </div>
+            <div>
+            <label style="font-family: Calibri">Senha:</label>
+            <input type="text" name="senha:" placeholder="senha" style="font-family: Calibri"/> <br>
+            </div>
+    <button type="submit" style="font-family: Calibri">Ok</button>
+    <button type="reset" style="font-family: Calibri">Cancelar</button>
 </form>
 
     }

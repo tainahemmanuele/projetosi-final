@@ -10,6 +10,9 @@ public class Usuario {
     private String email;
     private String senha;
 
+    public Usuario(){
+
+    }
     public Usuario(String username, String email, String senha) throws  Exception {
         this.username = Verificador.verificaUsername(username);
         this.email = Verificador.verificaEmail(email);

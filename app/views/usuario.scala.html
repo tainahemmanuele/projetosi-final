@@ -1,14 +1,14 @@
 @(usuario :Usuario)
 
 @main("Exemplo SI1") {
-    <h2>Editar Pessoa</h2>
+  <h2>Editar Pessoa</h2>
 
-    <form method="POST" action="@routes.Application.editarUsuario(usuario.getEmail)">
-        <input type="text" name="nome" value="@usuario.getUsername"/> <br>
-        <input type="text" name="cpf" value="@usuario.getEmail"/> <br>
-        <button type="submit">Editar</button>
-    </form>
+  <form method="POST" action="@routes.Application.editarUsuario(usuario.getEmail)">
+    <input type="text" name="nome" value="@usuario.getUsername"/> <br>
+    <input type="text" name="cpf" value="@usuario.getEmail"/> <br>
+    <button type="submit">Editar</button>
+  </form>
 
 
-</form>
+  </form>
 }

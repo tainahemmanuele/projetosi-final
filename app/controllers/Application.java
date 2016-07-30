@@ -23,17 +23,20 @@ public class Application extends Controller {
     }
 
 
-    public Result addUsuario() {
-        Usuario usuario= formFactory.form(Usuario.class).bindFromRequest().get();
+    public Result cadastraUsuario() {
+        Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
         listaUsuarios.add(usuario);
         //JPA.em().persist(usuario);
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.login());
     }
 
     public Result usuario(String email){
         return ok(usuario.render(getUsuarioEmail(email)));
     }
 
+    public Result login(){
+        return TODO;
+    }
     private Usuario getUsuarioEmail(String email){
         for(Usuario usuario:listaUsuarios){
             if(usuario.getEmail().equals(email)){
