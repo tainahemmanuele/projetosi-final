@@ -1,0 +1,18 @@
+@(usuario :Usuario)
+
+@main("Editar") {
+    <h2>Editar Conta</h2>
+
+    <form method="POST" action="@routes.LoggedUserController.editarConta()">
+        <input type="text" name="username" value="@usuario.getUsername()"/> <br>
+        <input type="text" name="email" value="@usuario.getEmail()"/> <br>
+        <input type="password" name="senha" value="@usuario.getSenha()"/> <br>
+        <button type="submit">Editar</button>
+    </form>
+
+    <form method="get" action="@routes.LoggedUserController.logout()">
+        <div>
+            <button type="submit">Sair</button>
+        </div>
+    </form>
+}

@@ -1,14 +1,18 @@
 @(usuario :Usuario)
 
-@main("Exemplo SI1") {
-  <h2>Editar Pessoa</h2>
+<!DOCTYPE html>
 
-  <form method="POST" action="@routes.Application.editarUsuario(usuario.getEmail)">
-    <input type="text" name="nome" value="@usuario.getUsername"/> <br>
-    <input type="text" name="cpf" value="@usuario.getEmail"/> <br>
-    <button type="submit">Editar</button>
-  </form>
+<html>
+    <head>
+        <title>@usuario.getUsername()</title>
+    </head>
+    <body>
+        <h2>Bem vindo @usuario.getUsername()!</h2>
+        <h5 style="font-family: Calibri">Arquivos</h5>
+        <p style="font-family: Calibri">WORK IN PROGRESS</p>
 
-
-  </form>
-}
+        <form method="get" action="@routes.LoggedUserController.editarRender()">
+            <button type="submit">Editar Conta</button>
+        </form>
+    </body>
+</html>

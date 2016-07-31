@@ -3,12 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-POST    /cadastra                   controllers.Application.cadastraUsuario()
+GET     /                            controllers.Application.index()
+POST    /cadastra                    controllers.Application.cadastraUsuario()
 
-GET /usuario/:email                 controllers.Application.usuario(email: String)
-POST /editarUsuario/:email          controllers.Application.editarUsuario(email:String)
-GET /login/                        controllers.Application.login()
-GET     /                           controllers.LoggedUserController.index()
+GET /editar/                         controllers.LoggedUserController.editarRender()
+POST /editarUsuario/                 controllers.LoggedUserController.editarConta()
+POST /login/                         controllers.Application.login()
+GET /login/                          controllers.Application.loginRender()
+GET /user                            controllers.LoggedUserController.index()
+GET /logout                          controllers.LoggedUserController.logout()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,25 +1,25 @@
 
 @(listaUsuarios: List[Usuario])
 
-    @main("TextDropBox") {
+@main("TextDropBox") {
 
-        <h2 style="font-family: Calibri">Cadastro</h2>
+    <h2 style="font-family: Calibri">Cadastro</h2>
 
-        <form method="POST" action="@routes.Application.cadastraUsuario()">
-            <div>
-            <label style="font-family: Calibri">Nome:</label>
-            <input type="text" name="username:" placeholder="Username" style="font-family: Calibri"/> <br>
-            </div>
-            <div>
+    <form method="POST" action="@routes.Application.cadastraUsuario()">
+        <div>
+            <label style="font-family: Calibri">Username:</label>
+            <input type="text" name="username" placeholder="Username" style="font-family: Calibri"/> <br>
+        </div>
+        <div>
             <label style="font-family: Calibri">Email:</label>
-            <input type="text" name="email:" placeholder="Email" style="font-family: Calibri"/> <br>
-            </div>
-            <div>
+            <input type="text" name="email" placeholder="Email" style="font-family: Calibri"/> <br>
+        </div>
+        <div>
             <label style="font-family: Calibri">Senha:</label>
-            <input type="password" name="senha:" placeholder="Senha" style="font-family: Calibri"/> <br>
-            </div>
-    <button type="submit" style="font-family: Calibri">Ok</button>
-    <button type="reset" style="font-family: Calibri">Cancelar</button>
-</form>
+            <input type="password" name="senha" placeholder="Senha" style="font-family: Calibri"/> <br>
+        </div>
+        <button type="submit" style="font-family: Calibri">Ok</button>
+        <button type="reset" style="font-family: Calibri">Cancelar</button>
+    </form>
 
-    }
+}
