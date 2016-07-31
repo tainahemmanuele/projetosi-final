@@ -1,0 +1,17 @@
+@main("TextDropBox") {
+
+    <h2 style="font-family: Calibri">Login</h2>
+    <form method="POST" action="@routes.Application.login()">
+        <div>
+            <label style="font-family: Calibri">Email:</label>
+            <input type="text" name="login:" placeholder="Username ou Email" style="font-family: Calibri"/> <br>
+        </div>
+        <div>
+            <label style="font-family: Calibri">Senha:</label>
+            <input type="password" name="senha:" placeholder="Senha" style="font-family: Calibri"/> <br>
+        </div>
+        <button type="submit" style="font-family: Calibri">Entrar</button>
+    </form>
+
+    <p><a href=index.scala.html>Cadastrar-se.</a></p>
+}

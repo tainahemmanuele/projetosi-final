@@ -3,6 +3,7 @@ package controllers;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
+import util.Verificador;
 import views.html.*;
 import models.Usuario;
 import play.data.FormFactory;
@@ -22,12 +23,31 @@ public class Application extends Controller {
         return ok(index.render(listaUsuarios));
     }
 
+    public Result loginEmail(String email, String senha) {
+        Usuario user = getUsuarioEmail(email);
+        if (user != null && user.getSenha().equals(senha)) {
+            LoggedUserController.loggedUser = user;
+            return redirect(routes.LoggedUserController.index());
+        } else {
+            return badRequest("Usuario e/ou senha incorretos.");
+        }
+    }
+
+    public Result loginUsername(String username, String senha) {
+        Usuario user = getUsuarioUsername(username);
+        if (user != null && user.getSenha().equals(senha)) {
+            LoggedUserController.loggedUser = user;
+            return redirect(routes.LoggedUserController.index());
+        } else {
+            return badRequest("Usuario e/ou senha incorretos.");
+        }
+    }
 
     public Result cadastraUsuario() {
         Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
         listaUsuarios.add(usuario);
         //JPA.em().persist(usuario);
-        return redirect(routes.Application.login());
+        return ok(login.render());
     }
 
     public Result usuario(String email){
@@ -37,6 +57,7 @@ public class Application extends Controller {
     public Result login(){
         return TODO;
     }
+
     private Usuario getUsuarioEmail(String email){
         for(Usuario usuario:listaUsuarios){
             if(usuario.getEmail().equals(email)){
@@ -47,6 +68,15 @@ public class Application extends Controller {
         return null;
     }
 
+    private Usuario getUsuarioUsername(String username){
+        for(Usuario usuario:listaUsuarios){
+            if(usuario.getUsername().equals(username)){
+                return usuario;
+            }
+
+        }
+        return null;
+    }
 
     public Result editarUsuario(String email)throws Exception{
         Usuario usuarioAtual= getUsuarioEmail(email);
