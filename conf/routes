@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /cadastra                   controllers.Application.cadastraUsuario()
+GET    /sucesso                     controllers.Application.mensagem()
 GET /usuario/:email                 controllers.Application.usuario(email: String)
 POST /editarUsuario/:email          controllers.Application.editarUsuario(email:String)
 POST /login/                        controllers.Application.login()
