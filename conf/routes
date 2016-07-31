@@ -5,10 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /cadastra                   controllers.Application.cadastraUsuario()
-GET    /sucesso                     controllers.Application.mensagem()
+
 GET /usuario/:email                 controllers.Application.usuario(email: String)
 POST /editarUsuario/:email          controllers.Application.editarUsuario(email:String)
-POST /login/                        controllers.Application.login()
+GET /login/                        controllers.Application.login()
 GET     /                           controllers.LoggedUserController.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

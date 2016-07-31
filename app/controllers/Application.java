@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static play.libs.Json.*;
 
 public class Application extends Controller {
@@ -27,7 +28,7 @@ public class Application extends Controller {
         Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
         listaUsuarios.add(usuario);
         //JPA.em().persist(usuario);
-        return redirect(routes.Application.mensagem());
+        return ok(mensagem.render(""));
 
     }
 
@@ -35,9 +36,7 @@ public class Application extends Controller {
         return ok(usuario.render(getUsuarioEmail(email)));
     }
 
-    public Result mensagem(){
-        return ok(mensagem.render(""));
-    }
+
 
     public Result login(){
         return TODO;
