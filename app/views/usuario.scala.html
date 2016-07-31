@@ -8,11 +8,17 @@
     </head>
     <body>
         <h2>Bem vindo @usuario.getUsername()!</h2>
-        <h5 style="font-family: Calibri">Arquivos</h5>
+        <h3 style="font-family: Calibri">Arquivos</h3>
         <p style="font-family: Calibri">WORK IN PROGRESS</p>
 
         <form method="get" action="@routes.LoggedUserController.editarRender()">
             <button type="submit">Editar Conta</button>
+        </form>
+
+        <form method="get" action="@routes.LoggedUserController.logout()">
+            <div>
+                <button type="submit">Sair</button>
+            </div>
         </form>
     </body>
 </html>
