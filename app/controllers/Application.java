@@ -42,6 +42,7 @@ public class Application extends Controller {
     public Result login(){
         return TODO;
     }
+
     private Usuario getUsuarioEmail(String email){
         for(Usuario usuario:listaUsuarios){
             if(usuario.getEmail().equals(email)){
@@ -60,6 +61,7 @@ public class Application extends Controller {
         usuarioAtual.setEmail(usuarioNovo.getEmail());
         return redirect(routes.Application.index());
     }
+
     public Result loginEmail(String email, String senha) {
                Usuario user = getUsuarioEmail(email);
         if (user != null && user.getSenha().equals(senha)) {
