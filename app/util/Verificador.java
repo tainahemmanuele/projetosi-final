@@ -1,7 +1,7 @@
 package util;
 
 /**
- * Created by administrador1 on 24/07/2016.
+ * Created by Tainah Emmanuele on 24/07/2016.
  */
 public class Verificador {
     public Verificador() {
