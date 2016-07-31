@@ -27,7 +27,7 @@ public class Application extends Controller {
         Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
         listaUsuarios.add(usuario);
         //JPA.em().persist(usuario);
-        return redirect(routes.Application.mensagem());
+        return redirect(routes.Application.login());
     }
 
     public Result usuario(String email){
@@ -54,9 +54,5 @@ public class Application extends Controller {
         usuarioAtual.setUsername(usuarioNovo.getUsername());
         usuarioAtual.setEmail(usuarioNovo.getEmail());
         return redirect(routes.Application.index());
-    }
-
-    public Result mensagem(){
-        return ok(mensagem.render(""));
     }
 }
