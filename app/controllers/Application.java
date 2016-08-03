@@ -19,7 +19,7 @@ public class Application extends Controller {
 
     @Inject
     private FormFactory formFactory;
-    private List<Usuario> listaUsuarios = new ArrayList<>();
+    private static List<Usuario> listaUsuarios = new ArrayList<>();
 
     public Result index() {
         return ok(index.render(listaUsuarios));
@@ -40,34 +40,22 @@ public class Application extends Controller {
 
     public Result login(){
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
+        Usuario user = null;
         if (formLogin.getLogin().contains("@"))
-            return loginEmail(formLogin.getLogin(), formLogin.getSenha());
+            user = getUsuarioEmail(formLogin.getLogin());
         else
-            return loginUsername(formLogin.getLogin(), formLogin.getSenha());
-
-    }
-
-    public Result loginEmail(String email, String senha) {
-        Usuario user = getUsuarioEmail(email);
-        if (user != null && user.getSenha().equals(senha)) {
-            LoggedUserController.loggedUser = user;
+            user = getUsuarioUsername(formLogin.getLogin());
+        if (user != null && user.getSenha().equals(formLogin.getSenha())) {
+            session("email", user.getEmail());
             return redirect(routes.LoggedUserController.index());
         } else {
-            return badRequest("Usuario e/ou senha incorretos.");
+            flash("login", "Senha e/ou usuario incorretos.");
+            return redirect(routes.Application.loginRender());
         }
+
     }
 
-    public Result loginUsername(String username, String senha) {
-        Usuario user = getUsuarioUsername(username);
-        if (user != null && user.getSenha().equals(senha)) {
-            LoggedUserController.loggedUser = user;
-            return redirect(routes.LoggedUserController.index());
-        } else {
-            return badRequest("Usuario e/ou senha incorretos.");
-        }
-    }
-
-    private Usuario getUsuarioEmail(String email){
+    public static Usuario getUsuarioEmail(String email){
         for(Usuario usuario:listaUsuarios){
             if(usuario.getEmail().equals(email)){
                 return usuario;
