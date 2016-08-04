@@ -1,5 +1,7 @@
 package models;
 
+import exceptions.EmptyStringException;
+import exceptions.InvalidEmailException;
 import util.Verificador;
 
 /**
@@ -14,9 +16,16 @@ public class Usuario {
 
     }
     public Usuario(String username, String email, String senha) throws  Exception {
-        this.username = Verificador.verificaUsername(username);
-        this.email = Verificador.verificaEmail(email);
-        this.senha = Verificador.verificaSenha(senha);
+        if (!Verificador.verificaString(username))
+            throw new EmptyStringException("Username");
+        if (!Verificador.verificaString(senha))
+            throw new EmptyStringException("Senha");
+        if (!Verificador.verificaEmail(email))
+            throw new InvalidEmailException();
+
+        this.username = username;
+        this.email = email;
+        this.senha = senha;
     }
 
 
@@ -25,7 +34,10 @@ public class Usuario {
     }
 
     public void setUsername(String username) throws Exception{
-        this.username =  Verificador.verificaUsername(username);
+        if (!Verificador.verificaString(username))
+            throw new EmptyStringException("Username");
+
+        this.username =  username;
     }
 
     public String getEmail() {
@@ -33,7 +45,10 @@ public class Usuario {
     }
 
     public void setEmail(String email) throws Exception{
-        this.email = Verificador.verificaEmail(email);
+        if (!Verificador.verificaEmail(email))
+            throw new InvalidEmailException();
+
+        this.email = email;
     }
 
     public String getSenha() {
@@ -41,7 +56,10 @@ public class Usuario {
     }
 
     public void setSenha(String senha) throws Exception {
-        this.senha = Verificador.verificaSenha(senha);
+        if (!Verificador.verificaString(senha))
+            throw new EmptyStringException("Senha");
+
+        this.senha = senha;
     }
 
 }

@@ -41,10 +41,19 @@ public class Application extends Controller {
     public Result login(){
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
         Usuario user = null;
-        if (formLogin.getLogin().contains("@"))
+
+        if (!Verificador.verificaString(formLogin.getLogin())) {
+            flash("login", "Campo de Loging nao pode ser vazio.");
+            return redirect(routes.Application.loginRender());
+        } else if (!Verificador.verificaString(formLogin.getSenha())) {
+            flash("login", "Campo de senha nao pode ser vazio.");
+            return redirect(routes.Application.loginRender());
+
+        } else if (Verificador.verificaEmail(formLogin.getLogin()))
             user = getUsuarioEmail(formLogin.getLogin());
         else
             user = getUsuarioUsername(formLogin.getLogin());
+
         if (user != null && user.getSenha().equals(formLogin.getSenha())) {
             session("email", user.getEmail());
             return redirect(routes.LoggedUserController.index());

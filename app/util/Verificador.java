@@ -7,36 +7,20 @@ public class Verificador {
     public Verificador() {
     }
 
-    public static String verificaUsername(String username) throws Exception{
-        if(username.equals("")) {
-            throw new Exception("Username nao pode ser vazio");
-        }
-        else if(username.startsWith(" ")){
-            throw new Exception("Username nao pode ser vazio");
+    public static boolean verificaString(String string) {
+        if(string.trim().length() > 0){
+            return true;
         }else{
-            return username;
+            return false;
         }
     }
 
-    public static String verificaEmail(String email) throws Exception {
+    public static boolean verificaEmail(String email) {
         if (((email.endsWith(".com") || (email.endsWith(".com.br"))) && (email
                 .matches("(.*)@(.*)")) == true)) {
-            return email;
+            return true;
         } else {
-            throw new Exception("Formato de e-mail incorreto");
-        }
-    }
-
-    public static String verificaSenha(String senha) throws Exception {
-        if (senha.equals("")) {
-            throw new Exception(
-                    "Senha nao pode ser vazia");
-        } else if (senha.startsWith(" ")) {
-            throw new Exception(
-                    "Senha nao pode ser vazia.");
-        } else {
-            return senha;
-
+            return false;
         }
     }
 }
