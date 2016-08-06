@@ -2,7 +2,6 @@ package models;
 
 import exceptions.EmptyStringException;
 import exceptions.InvalidEmailException;
-import exceptions.InputException;
 import util.Verificador;
 
 /**
@@ -12,12 +11,13 @@ public class Usuario {
     private String username;
     private String email;
     private String senha;
+    private Content folder;
 
     public Usuario(){
-
+        this.folder = new Directory("Pasta Pessoal");
     }
-    public Usuario(String username, String email, String senha) throws InputException{
 
+    public Usuario(String username, String email, String senha) throws  Exception {
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
         if (!Verificador.verificaString(senha))
@@ -26,9 +26,25 @@ public class Usuario {
             throw new InvalidEmailException();
 
         this.username = username;
-
         this.email = email;
         this.senha = senha;
+        this.folder = new Directory("Pasta Pessoal");
+
+    }
+
+    // ADICIONA ARQUIVOS E PASTAS
+    public void addArchive(String nameArchive){
+        Content archive = new Archive(nameArchive);
+        ((Directory)this.folder).addContent(archive, folder);
+    }
+
+    public void addFolder(String nameFolder){
+        Content directory = new Directory(nameFolder);
+        ((Directory)this.folder).addContent(directory, folder);
+    }
+
+    public String getContents(){
+        return this.folder.toString();
     }
 
 
