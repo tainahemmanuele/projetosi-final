@@ -2,6 +2,7 @@ package models;
 
 import exceptions.EmptyStringException;
 import exceptions.InvalidEmailException;
+import exceptions.InputException;
 import util.Verificador;
 
 /**
@@ -15,7 +16,8 @@ public class Usuario {
     public Usuario(){
 
     }
-    public Usuario(String username, String email, String senha) throws  Exception {
+    public Usuario(String username, String email, String senha) throws InputException{
+
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
         if (!Verificador.verificaString(senha))
@@ -24,6 +26,7 @@ public class Usuario {
             throw new InvalidEmailException();
 
         this.username = username;
+
         this.email = email;
         this.senha = senha;
     }

@@ -19,20 +19,14 @@ public class Application extends Controller {
 
     @Inject
     private FormFactory formFactory;
-    private static List<Usuario> listaUsuarios = new ArrayList<>();
+    private static CadastroController cadastro;
+
 
     public Result index() {
-        return ok(index.render(listaUsuarios));
+        return ok(index.render(cadastro.getListaUsuarios()));
     }
 
 
-    public Result cadastraUsuario() {
-        Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
-        listaUsuarios.add(usuario);
-        //JPA.em().persist(usuario);
-        return ok(mensagem.render(""));
-
-    }
 
     public Result loginRender() {
         return ok(login.render());
@@ -43,7 +37,7 @@ public class Application extends Controller {
         Usuario user = null;
 
         if (!Verificador.verificaString(formLogin.getLogin())) {
-            flash("login", "Campo de Loging nao pode ser vazio.");
+            flash("login", "Campo de Login nao pode ser vazio.");
             return redirect(routes.Application.loginRender());
         } else if (!Verificador.verificaString(formLogin.getSenha())) {
             flash("login", "Campo de senha nao pode ser vazio.");
@@ -65,7 +59,7 @@ public class Application extends Controller {
     }
 
     public static Usuario getUsuarioEmail(String email){
-        for(Usuario usuario:listaUsuarios){
+        for(Usuario usuario:cadastro.getListaUsuarios()){
             if(usuario.getEmail().equals(email)){
                 return usuario;
             }
@@ -75,7 +69,7 @@ public class Application extends Controller {
     }
 
     private Usuario getUsuarioUsername(String username){
-        for(Usuario usuario:listaUsuarios){
+        for(Usuario usuario:cadastro.getListaUsuarios()){
             if(usuario.getUsername().equals(username)){
                 return usuario;
             }
