@@ -4,6 +4,8 @@ import exceptions.EmptyStringException;
 import exceptions.InvalidEmailException;
 import util.Verificador;
 
+import java.util.List;
+
 /**
  * Created by Tainah Emmanuele on 24/07/2016.
  */
@@ -29,7 +31,6 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.folder = new Directory("Pasta Pessoal");
-
     }
 
     // ADICIONA ARQUIVOS E PASTAS
@@ -43,8 +44,12 @@ public class Usuario {
         ((Directory)this.folder).addContent(directory, folder);
     }
 
-    public String getContents(){
-        return this.folder.toString();
+
+    public List<Archive> getArchives(){
+        return ((Directory)this.folder).getListArchive();
+    }
+    public List<Directory> getDirectory(){
+        return ((Directory)this.folder).getListDirectory();
     }
 
 

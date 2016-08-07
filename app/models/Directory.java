@@ -48,7 +48,7 @@ public class Directory implements Content{
     }
 
     //Getters
-    public String getListDirectory(){
+    public String getlistDirectory(){
         String names = "";
         String quebraLinha = System.getProperty("line.separator");
         for (int i = 0; i < this.listDirectory.size(); i++){
@@ -57,7 +57,7 @@ public class Directory implements Content{
         return names;
     }
 
-    public String getListArchive(){
+    public String getlistArchive(){
         String names = "";
         String quebraLinha = System.getProperty("line.separator");
         for (int i = 0; i < this.listArchive.size(); i++){
@@ -66,11 +66,25 @@ public class Directory implements Content{
         return names;
     }
 
-    public String getName() { return name; }
+    public List<Directory> getListDirectory(){
+       return this.listDirectory;
+    }
+
+    public List<Archive> getListArchive(){
+       return this.listArchive;
+    }
+
+    public String getName() {
+        if(this.name == null) {
+            return "Pasta Vazia";
+        }else{
+            return name;
+        }
+    }
 
     //ToString
     public String toString(){
-        String text = getListArchive() + getListDirectory();
+        String text = getlistArchive() + getlistDirectory();
         if (text.equals("")){
             return "Pasta Vazia";
         }

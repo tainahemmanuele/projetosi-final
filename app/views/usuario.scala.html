@@ -9,7 +9,14 @@
     <body style="font-family: Calibri">
         <h2>Bem vindo @usuario.getUsername()!</h2>
         <h3 style="font-family: Calibri">Arquivos</h3>
-        <p style="font-family: Calibri">@usuario.getContents()</p>
+
+        @for(archive <- usuario.getArchives()){
+            <p style="font-family: Calibri"> @archive.getName() </p>
+        }
+
+        @for(directory <- usuario.getDirectory()){
+            <a href="listarPastas.scala.html @directory"> @directory.getName() </a>
+        }
 
         <form method="get" action="@routes.LoggedUserController.editarRender()">
             <button type="submit">Editar Conta</button>
