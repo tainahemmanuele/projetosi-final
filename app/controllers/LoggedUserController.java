@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Texto;
 import models.Usuario;
 import play.data.FormFactory;
 import play.mvc.*;
@@ -14,6 +15,12 @@ public class LoggedUserController extends Controller {
 
     @Inject
     private FormFactory formFactory;
+
+    public Result criaTexto(){
+        Texto informacaoTexto = formFactory.form(Texto.class).bindFromRequest().get();
+        informacaoTexto.getInformacaoTextual();
+        return ok(texto.render());
+    }
 
     public Result index() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));

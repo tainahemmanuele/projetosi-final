@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Texto;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
@@ -21,6 +22,10 @@ public class Application extends Controller {
     private FormFactory formFactory;
     private static List<Usuario> listaUsuarios = new ArrayList<>();
 
+
+
+
+
     public Result index() {
         return ok(index.render(listaUsuarios));
     }
@@ -39,6 +44,7 @@ public class Application extends Controller {
     }
 
     public Result login(){
+
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
         Usuario user = null;
 
