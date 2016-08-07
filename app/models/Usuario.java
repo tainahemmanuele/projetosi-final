@@ -81,4 +81,20 @@ public class Usuario {
         this.senha = senha;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Usuario) {
+            Usuario usuario = (Usuario) obj;
+            if (usuario.getUsername().equals(this.getUsername())
+                    && usuario.getEmail() == this.getEmail()) {
+                return true;
+
+            } else {
+
+                return false;
+            }
+        }
+        return false;
+    }
+
 }
