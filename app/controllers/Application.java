@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.UsuarioException;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
@@ -19,11 +20,11 @@ public class Application extends Controller {
 
     @Inject
     private FormFactory formFactory;
-    private static CadastroController cadastro;
+    private static List<Usuario> listaUsuarios = new ArrayList<>();;
 
 
     public Result index() {
-        return ok(index.render(cadastro.getListaUsuarios()));
+        return ok(index.render());
     }
 
 
@@ -59,7 +60,7 @@ public class Application extends Controller {
     }
 
     public static Usuario getUsuarioEmail(String email){
-        for(Usuario usuario:cadastro.getListaUsuarios()){
+        for(Usuario usuario: listaUsuarios){
             if(usuario.getEmail().equals(email)){
                 return usuario;
             }
@@ -69,12 +70,27 @@ public class Application extends Controller {
     }
 
     private Usuario getUsuarioUsername(String username){
-        for(Usuario usuario:cadastro.getListaUsuarios()){
+        for(Usuario usuario: listaUsuarios){
             if(usuario.getUsername().equals(username)){
                 return usuario;
             }
 
         }
         return null;
+    }
+
+    public static Usuario buscaUsuario(Usuario usuario) throws UsuarioException {
+        for(Usuario usuarioExistente : listaUsuarios) {
+            if (usuarioExistente.getUsername().equals(usuario.getUsername())) {
+                throw new UsuarioException("username");
+            } else if (usuarioExistente.getEmail().equals(usuario.getEmail())) {
+                throw new UsuarioException("email");
+            }
+        }
+        return usuario;
+    }
+
+    public static void adicionaUsuario(Usuario usuario){
+        listaUsuarios.add(usuario);
     }
 }

@@ -22,7 +22,7 @@ import java.util.List;
 public class CadastroController extends Controller {
     @Inject
     private FormFactory formFactory;
-    private static List<Usuario> listaUsuarios = new ArrayList<>();
+
     private Verificador verificador;
 
     public Result cadastraUsuario()  {
@@ -30,17 +30,17 @@ public class CadastroController extends Controller {
         try{
             Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
             try {
-                buscaUsuario(usuario);
-                listaUsuarios.add(usuario);
+                Application.buscaUsuario(usuario);
+                Application.adicionaUsuario(usuario);
                 return ok(mensagem.render(""));
             } catch (UsuarioException e){
                 flash("cadastro", e.getMessage());
-                return ok(index.render(listaUsuarios));
+                return ok(index.render());
             }
 
         }catch( Exception e){
             flash("cadastro", "Falha ao tentar cadastrar. Tente Novamente");
-            return ok(index.render(listaUsuarios));
+            return ok(index.render());
 
         }
 
@@ -49,25 +49,14 @@ public class CadastroController extends Controller {
 
     }
 
-    public static List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
+
 
 
 
     public Result index() {
-        return ok(index.render(listaUsuarios));
+        return ok(index.render());
     }
 
 
-    public Usuario buscaUsuario(Usuario usuario) throws UsuarioException{
-        for(Usuario usuarioExistente : listaUsuarios) {
-            if (usuarioExistente.getUsername().equals(usuario.getUsername())) {
-                throw new UsuarioException("username");
-            } else if (usuarioExistente.getEmail().equals(usuario.getEmail())) {
-                throw new UsuarioException("email");
-            }
-        }
-        return usuario;
-    }
+
 }
