@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Texto;
+import exceptions.UsuarioException;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
@@ -20,36 +20,25 @@ public class Application extends Controller {
 
     @Inject
     private FormFactory formFactory;
-    private static List<Usuario> listaUsuarios = new ArrayList<>();
-
-
-
+    private static List<Usuario> listaUsuarios = new ArrayList<>();;
 
 
     public Result index() {
-        return ok(index.render(listaUsuarios));
+        return ok(index.render());
     }
 
 
-    public Result cadastraUsuario() {
-        Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
-        listaUsuarios.add(usuario);
-        //JPA.em().persist(usuario);
-        return ok(mensagem.render(""));
-
-    }
 
     public Result loginRender() {
         return ok(login.render());
     }
 
     public Result login(){
-
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
         Usuario user = null;
 
         if (!Verificador.verificaString(formLogin.getLogin())) {
-            flash("login", "Campo de Loging nao pode ser vazio.");
+            flash("login", "Campo de Login nao pode ser vazio.");
             return redirect(routes.Application.loginRender());
         } else if (!Verificador.verificaString(formLogin.getSenha())) {
             flash("login", "Campo de senha nao pode ser vazio.");
@@ -71,7 +60,7 @@ public class Application extends Controller {
     }
 
     public static Usuario getUsuarioEmail(String email){
-        for(Usuario usuario:listaUsuarios){
+        for(Usuario usuario: listaUsuarios){
             if(usuario.getEmail().equals(email)){
                 return usuario;
             }
@@ -81,12 +70,27 @@ public class Application extends Controller {
     }
 
     private Usuario getUsuarioUsername(String username){
-        for(Usuario usuario:listaUsuarios){
+        for(Usuario usuario: listaUsuarios){
             if(usuario.getUsername().equals(username)){
                 return usuario;
             }
 
         }
         return null;
+    }
+
+    public static Usuario buscaUsuario(Usuario usuario) throws UsuarioException {
+        for(Usuario usuarioExistente : listaUsuarios) {
+            if (usuarioExistente.getUsername().equals(usuario.getUsername())) {
+                throw new UsuarioException("username");
+            } else if (usuarioExistente.getEmail().equals(usuario.getEmail())) {
+                throw new UsuarioException("email");
+            }
+        }
+        return usuario;
+    }
+
+    public static void adicionaUsuario(Usuario usuario){
+        listaUsuarios.add(usuario);
     }
 }

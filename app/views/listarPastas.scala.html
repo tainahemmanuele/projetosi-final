@@ -1,0 +1,21 @@
+@(directory : Directory)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>@directory.getName()</title>
+  </head>
+  <body>
+    <h2 style="font-family: Calibri">@directory.getName()</h2>
+
+    @for(archive <- directory.getListArchive()){
+      <p style="font-family: Calibri"> @archive.getName() </p>
+    }
+
+    @for(directory <- directory.getListDirectory()){
+      <a href="listarPastas.scala.html"> @directory.getName() <br /> </a>
+    }
+
+</body>
+</html>

@@ -1,11 +1,15 @@
 
-@(listaUsuarios: List[Usuario])
+
 
 @main("TextDropBox") {
 
     <h2 style="font-family: Calibri">Cadastro</h2>
 
-    <form method="POST" action="@routes.Application.cadastraUsuario()">
+    @if(flash.containsKey("cadastro")) {
+        <p style="background-color: rgba(255, 0, 0, 0.5)">@flash().get("cadastro")</p>
+    }
+
+    <form method="POST" action="@routes.CadastroController.cadastraUsuario()">
         <div>
             <label style="font-family: Calibri">nome:</label>
             <input type="text" name="username" placeholder="nome" style="font-family: Calibri"/> <br>

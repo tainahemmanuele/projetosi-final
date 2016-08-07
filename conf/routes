@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                            controllers.Application.index()
-POST    /cadastra                    controllers.Application.cadastraUsuario()
+POST    /cadastra                    controllers.CadastroController.cadastraUsuario()
 
 GET /editar/                         controllers.LoggedUserController.editarRender()
 POST /editarUsuario/                 controllers.LoggedUserController.editarConta()
