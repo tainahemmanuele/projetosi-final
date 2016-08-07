@@ -15,7 +15,7 @@
         }
 
         @for(directory <- usuario.getDirectory()){
-            <a href="listarPastas.scala.html @directory"> @directory.getName() </a>
+            <a href="listarPastas.scala.html @directory"> @directory.getName() <br/></a>
         }
 
         <form method="get" action="@routes.LoggedUserController.editarRender()">
