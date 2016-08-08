@@ -11,7 +11,8 @@
         <h3 style="font-family: Calibri">Arquivos</h3>
 
         @for(archive <- usuario.getArchives()){
-            <p style="font-family: Calibri"> @archive.getName() </p>
+            <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
+            <p>@archive.getPath</p>
         }
 
         @for(directory <- usuario.getDirectory()){
@@ -20,6 +21,10 @@
 
         <form method="get" action="@routes.LoggedUserController.editarRender()">
             <button type="submit">Editar Conta</button>
+        </form>
+
+        <form method="get" action="@routes.LoggedUserController.criarArquivoRender()">
+            <button type="submit">Criar Texto</button>
         </form>
 
         <form method="get" action="@routes.LoggedUserController.logout()">

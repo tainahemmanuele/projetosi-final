@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Archive;
 import models.Usuario;
 import play.data.FormFactory;
 import play.mvc.*;
@@ -38,4 +39,31 @@ public class LoggedUserController extends Controller {
         loggedUser.setSenha(usuarioNovo.getSenha());
         return redirect(routes.LoggedUserController.index());
     }
+
+    public Result criarArquivoRender() {
+        return ok(texto.render());
+    }
+
+    public Result criarArquivoTexto() {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
+        loggedUser.adicionaArquivo(arquivo);
+        return redirect(routes.LoggedUserController.index());
+    }
+
+    public Result editarArquivoRender(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive archive = (Archive) loggedUser.getContent(path);
+        return ok(editarTexto.render(archive));
+    }
+
+    public Result editarArquivoTexto(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive novoArquivo = formFactory.form(Archive.class).bindFromRequest().get();
+        Archive archive = (Archive) loggedUser.getContent(path);
+        archive.setTexto(novoArquivo.getTexto());
+        archive.setName(novoArquivo.getName());
+        return redirect(routes.LoggedUserController.index());
+    }
+
 }

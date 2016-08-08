@@ -13,7 +13,7 @@ public class Usuario {
     private String username;
     private String email;
     private String senha;
-    private Content folder;
+    private Directory folder;
 
     public Usuario(){
         this.folder = new Directory("Pasta Pessoal");
@@ -36,20 +36,26 @@ public class Usuario {
     // ADICIONA ARQUIVOS E PASTAS
     public void addArchive(String nameArchive){
         Content archive = new Archive(nameArchive);
-        ((Directory)this.folder).addContent(archive, folder);
+        this.folder.addContent(archive);
+    }
+
+    // Adiciona um arquivo ja existente.
+    public void adicionaArquivo(Archive novoArquivo) {
+        novoArquivo.setParent(this.folder);
+        this.folder.addContent(novoArquivo);
     }
 
     public void addFolder(String nameFolder){
         Content directory = new Directory(nameFolder);
-        ((Directory)this.folder).addContent(directory, folder);
+        this.folder.addContent(directory);
     }
 
 
     public List<Archive> getArchives(){
-        return ((Directory)this.folder).getListArchive();
+        return this.folder.getListArchive();
     }
     public List<Directory> getDirectory(){
-        return ((Directory)this.folder).getListDirectory();
+        return this.folder.getListDirectory();
     }
 
 
@@ -86,6 +92,10 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public void setFolderContent(Directory dir, Content conteudo) {
+        conteudo.setParent(dir);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Usuario) {
@@ -100,6 +110,19 @@ public class Usuario {
             }
         }
         return false;
+    }
+
+    public Content getContent(String path) {
+        String[] pathComponents = path.split("/");
+        Content content = this.folder;
+        for (int i = 1; i < pathComponents.length; i++) {
+            content = ((Directory) content).getContent(pathComponents[i]);
+        }
+        return content;
+    }
+
+    public Directory getFolder() {
+        return this.folder;
     }
 
 }

@@ -4,18 +4,18 @@
 
 <html>
   <head>
-    <title>@directory.getName()</title>
+    <title>@directory.getName</title>
   </head>
   <body>
-    <h2 style="font-family: Calibri">@directory.getName()</h2>
+    <h2 style="font-family: Calibri">@directory.getName</h2>
 
-    @for(archive <- directory.getListArchive()){
-      <p style="font-family: Calibri"> @archive.getName() </p>
+    @for(archive <- directory.getListArchive){
+      <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
     }
 
-    @for(directory <- directory.getListDirectory()){
-      <a href="listarPastas.scala.html"> @directory.getName() <br /> </a>
+    @for(directory <- directory.getListDirectory){
+      <a href="listarPastas.scala.html"> @directory.getName <br /> </a>
     }
 
-</body>
+  </body>
 </html>
