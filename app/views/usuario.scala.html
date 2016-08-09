@@ -10,7 +10,7 @@
         <h2>Bem vindo @usuario.getUsername()!</h2>
         <h3 style="font-family: Calibri">Arquivos</h3>
 
-        @if(directory.isEmpty){
+        @if(directory.isEmpty() == true){
            <p> Pasta Vazia </p>
 
             <form method="get" action="@routes.LoggedUserController.editDirectory(directory.getPath))">
