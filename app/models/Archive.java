@@ -67,6 +67,7 @@ public class Archive implements Content {
         return false;
     }
 
+
     // Este metodo remove os caracteres em branco do inicio do titulo.
     private static String standardName(String nomeDoArquivo){
         int indexCharacter = 0;

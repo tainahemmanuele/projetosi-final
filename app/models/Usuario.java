@@ -59,6 +59,7 @@ public class Usuario {
     }
 
 
+
     public String getUsername() {
         return username;
     }
@@ -92,9 +93,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public void setFolderContent(Directory dir, Content conteudo) {
-        conteudo.setParent(dir);
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -125,4 +123,7 @@ public class Usuario {
         return this.folder;
     }
 
+    public void setFolderContent(Directory dir, Content conteudo) {
+        conteudo.setParent(dir);
+    }
 }

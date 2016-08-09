@@ -40,6 +40,14 @@ public class Directory implements Content{
         return true;
     }
 
+    public boolean isEmpty() {
+        if(this.listArchive.size() == 0 && this.listDirectory.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     //Getters
     public String getlistDirectory(){
         String names = "";

@@ -1,4 +1,4 @@
-@(usuario :Usuario)
+@(usuario :Usuario)(directory : Directory)
 
 <!DOCTYPE html>
 
@@ -10,14 +10,22 @@
         <h2>Bem vindo @usuario.getUsername()!</h2>
         <h3 style="font-family: Calibri">Arquivos</h3>
 
-        @for(archive <- usuario.getArchives()){
-            <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
-            <p>@archive.getPath</p>
+        @if(directory.isEmpty){
+           <p> Pasta Vazia </p>
+
+            <form method="get" action="@routes.LoggedUserController.editDirectory(directory.getPath))">
+                <button type="submit">Voltar</button>
+            </form>
+
+        }else{
+            @for(archive <- directory.getListArchive()){
+                <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
+            }
+            @for(dir <- directory.getListDirectory()) {
+                <a href="@routes.LoggedUserController.editDirectory(dir.getPath())"> @dir.getName() <br/></a>
+            }
         }
 
-        @for(directory <- usuario.getDirectory()){
-            <a href="listarPastas.scala.html @directory"> @directory.getName() <br/></a>
-        }
 
         <form method="get" action="@routes.LoggedUserController.editarRender()">
             <button type="submit">Editar Conta</button>

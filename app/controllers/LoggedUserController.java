@@ -1,6 +1,8 @@
 package controllers;
 
 import models.Archive;
+import models.Content;
+import models.Directory;
 import models.Usuario;
 import play.data.FormFactory;
 import play.mvc.*;
@@ -18,8 +20,19 @@ public class LoggedUserController extends Controller {
 
     public Result index() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        return ok(usuario.render(loggedUser));
+        return ok(usuario.render(loggedUser, loggedUser.getFolder()));
     }
+
+    public Result editDirectory(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Content content = loggedUser.getContent(path);
+        Directory directory = null;
+        if(content.isDirectory()){
+            directory = (Directory) content;
+        }
+        return ok(usuario.render(loggedUser, directory));
+    }
+
 
     public Result logout() {
         session().clear();
