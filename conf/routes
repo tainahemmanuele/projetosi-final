@@ -3,7 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /                            controllers.Application.loginRender()
+GET     /                            controllers.Application.index()
+GET /cadastro                        controllers.Application.cadastroRender()
 POST    /cadastra                    controllers.CadastroController.cadastraUsuario()
 
 GET /editar/                         controllers.LoggedUserController.editarRender()

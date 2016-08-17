@@ -2,6 +2,7 @@ package models;
 
 import exceptions.EmptyStringException;
 import exceptions.InvalidEmailException;
+import exceptions.InputException;
 import util.Verificador;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class Usuario {
         this.folder = new Directory("Pasta Pessoal");
     }
 
-    public Usuario(String username, String email, String senha) throws  Exception {
+    public Usuario(String username, String email, String senha) throws InputException {
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
         if (!Verificador.verificaString(senha))

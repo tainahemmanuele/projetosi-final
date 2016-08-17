@@ -13,6 +13,7 @@ import play.data.FormFactory;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import play.data.Form;
 
 
 
@@ -28,19 +29,20 @@ public class CadastroController extends Controller {
     public Result cadastraUsuario()  {
 
         try{
-            Usuario usuario = formFactory.form(Usuario.class).bindFromRequest().get();
+            Form <Usuario> usuarioAux = formFactory.form(Usuario.class).bindFromRequest();
+            Usuario usuario = new Usuario(usuarioAux.get().getUsername(), usuarioAux.get().getEmail(), usuarioAux.get().getSenha());
             try {
                 Application.buscaUsuario(usuario);
                 Application.adicionaUsuario(usuario);
                 return ok(mensagem.render(""));
             } catch (UsuarioException e){
                 flash("cadastro", e.getMessage());
-                return ok(index.render());
+                return ok(cadastro.render());
             }
 
-        }catch( Exception e){
-            flash("cadastro", "Falha ao tentar cadastrar. Tente Novamente");
-            return ok(index.render());
+        }catch( InputException e){
+            flash("cadastro", e.getMessage());
+            return ok(cadastro.render());
 
         }
 
@@ -54,7 +56,7 @@ public class CadastroController extends Controller {
 
 
     public Result index() {
-        return ok(index.render());
+        return ok(cadastro.render());
     }
 
 

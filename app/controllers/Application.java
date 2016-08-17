@@ -24,9 +24,12 @@ public class Application extends Controller {
 
 
     public Result index() {
-        return ok(index.render());
+        return ok(login.render());
     }
 
+    public Result cadastroRender() {
+        return ok(cadastro.render());
+    }
 
 
     public Result loginRender() {
