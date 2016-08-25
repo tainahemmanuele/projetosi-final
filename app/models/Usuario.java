@@ -6,6 +6,7 @@ import exceptions.InputException;
 import util.Verificador;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Tainah Emmanuele on 24/07/2016.

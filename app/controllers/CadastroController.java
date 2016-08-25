@@ -5,6 +5,7 @@ import play.*;
 import play.mvc.*;
 import play.mvc.Result;
 import play.db.jpa.*;
+import util.FormularioCadastro;
 import util.FormularioLogin;
 import util.Verificador;
 import views.html.*;
@@ -13,6 +14,8 @@ import play.data.FormFactory;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import play.data.Form;
 
 
@@ -29,9 +32,11 @@ public class CadastroController extends Controller {
     public Result cadastraUsuario()  {
 
         try{
-            Form <Usuario> usuarioAux = formFactory.form(Usuario.class).bindFromRequest();
-            Usuario usuario = new Usuario(usuarioAux.get().getUsername(), usuarioAux.get().getEmail(), usuarioAux.get().getSenha());
+            FormularioCadastro formCadastro = formFactory.form(FormularioCadastro.class).bindFromRequest().get();
+            Usuario usuario = new Usuario(formCadastro.getUsername(),formCadastro.getEmail(),formCadastro.getSenha());
+
             try {
+
                 Application.buscaUsuario(usuario);
                 Application.adicionaUsuario(usuario);
                 return ok(mensagem.render(""));
