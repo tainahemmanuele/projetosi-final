@@ -1,44 +1,35 @@
-@(usuario :Usuario)(directory : Directory)
+@(user: Usuario)
 
-<!DOCTYPE html>
+@home(user.getUsername) {
+    <h3>@user.getContent(session().get("dir")).getPath</h3>
 
-<html>
-    <head>
-        <title>@usuario.getUsername()</title>
-    </head>
-    <body style="font-family: Calibri">
-        <h2>Bem vindo @usuario.getUsername()!</h2>
-        <h3 style="font-family: Calibri">Arquivos</h3>
-
-        @if(directory.isEmpty() == true){
-           <p> Pasta Vazia </p>
-
-            <form method="get" action="@routes.LoggedUserController.editDirectory(directory.getPath))">
-                <button type="submit">Voltar</button>
-            </form>
-
-        }else{
-            @for(archive <- directory.getListArchive()){
-                <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
+    @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).isEmpty() ) {
+        <p> Pasta Vazia </p>
+    } else {
+        <ul>
+            @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
+                <li><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></li>
             }
-            @for(dir <- directory.getListDirectory()) {
-                <a href="@routes.LoggedUserController.editDirectory(dir.getPath())"> @dir.getName() <br/></a>
+            @for(dir <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListDirectory()) {
+                <li><a href="@routes.LoggedUserController.openDirectory(dir.getPath)">
+                    <img src="@routes.Assets.at("images/folder.png")" height="16" width="16" /> @dir.getName <br /> </a></li>
             }
+        </ul>
+    }
+
+    <form>
+        @if(user.getContent(session().get("dir")).getParent() != null) {
+            <button formmethod="get" formaction="@routes.LoggedUserController.openDirectory(user.getContent(session().get("dir")).getParent().getPath)" type="submit">
+                Voltar
+            </button>
         }
 
+        <button formmethod="get" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
+            Novo Arquivo
+        </button>
 
-        <form method="get" action="@routes.LoggedUserController.editarRender()">
-            <button type="submit">Editar Conta</button>
-        </form>
-
-        <form method="get" action="@routes.LoggedUserController.criarArquivoRender()">
-            <button type="submit">Criar Texto</button>
-        </form>
-
-        <form method="get" action="@routes.LoggedUserController.logout()">
-            <div>
-                <button type="submit">Sair</button>
-            </div>
-        </form>
-    </body>
-</html>
+        <button formmethod="get" formaction="@routes.LoggedUserController.newDirRender()" type="submit">
+            Novo Diretorio
+        </button>
+    </form>
+}

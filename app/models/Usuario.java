@@ -56,6 +56,7 @@ public class Usuario {
     public List<Archive> getArchives(){
         return this.folder.getListArchive();
     }
+
     public List<Directory> getDirectory(){
         return this.folder.getListDirectory();
     }

@@ -20,17 +20,18 @@ public class LoggedUserController extends Controller {
 
     public Result index() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        return ok(usuario.render(loggedUser, loggedUser.getFolder()));
+        return openDirectory(loggedUser.getFolder().getPath());
     }
 
-    public Result editDirectory(String path) {
+    public Result openDirectory(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Content content = loggedUser.getContent(path);
-        Directory directory = null;
-        if(content.isDirectory()){
-            directory = (Directory) content;
-        }
-        return ok(usuario.render(loggedUser, directory));
+        if(content.isDirectory()) {
+            session().remove("dir");
+            session().put("dir", content.getPath());
+            return ok(usuario.render(loggedUser));
+        } else
+            return badRequest("ERRO");
     }
 
 
@@ -62,6 +63,20 @@ public class LoggedUserController extends Controller {
         Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
         loggedUser.adicionaArquivo(arquivo);
         return redirect(routes.LoggedUserController.index());
+    }
+
+    public Result newDirRender() {
+        String path = session("dir");
+        return ok(newDirectory.render(path));
+    }
+
+    public Result newDirectory(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Directory directory = (Directory) loggedUser.getContent(path);
+        Directory newDirectory = formFactory.form(Directory.class).bindFromRequest().get();
+        newDirectory.setParent(directory);
+        directory.addContent(newDirectory);
+        return redirect(routes.LoggedUserController.openDirectory(directory.getPath()));
     }
 
     public Result editarArquivoRender(String path) {

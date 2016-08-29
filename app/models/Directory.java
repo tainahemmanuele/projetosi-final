@@ -12,7 +12,12 @@ public class Directory implements Content{
     private List<Directory> listDirectory;
     private Directory parent;
 
-    public Directory(String name){
+    public Directory() {
+        this.listArchive = new ArrayList<Archive>();
+        this.listDirectory = new ArrayList<Directory>();
+    }
+
+    public Directory(String name) {
         this.name = name;
         this.listArchive = new ArrayList<Archive>();
         this.listDirectory = new ArrayList<Directory>();
@@ -76,11 +81,11 @@ public class Directory implements Content{
     }
 
     public String getName() {
-        if(this.name == null) {
-            return "Pasta Vazia";
-        }else{
-            return name;
-        }
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -103,13 +108,13 @@ public class Directory implements Content{
 
     public Content getContent(String contentName) {
         if (contentName.contains(".")) {
-            for(Archive archive : listArchive) {
+            for (Archive archive : listArchive) {
                 if (archive.getName().equals(contentName)) {
                     return archive;
                 }
             }
         } else {
-            for(Directory directory : listDirectory) {
+            for (Directory directory : listDirectory) {
                 if (directory.getName().equals(contentName)) {
                     return directory;
                 }

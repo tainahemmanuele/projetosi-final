@@ -1,0 +1,17 @@
+@(username :String)(content: Html)
+@main(username) {
+    <h2>Bem-vindo @username!</h2>
+
+    @content
+
+    <p></p>
+    <form>
+        <button formmethod="get" formaction="@routes.LoggedUserController.editarRender()" type="submit">
+            Editar Conta
+        </button>
+
+        <button formmethod="get" formaction="@routes.LoggedUserController.logout()" type="submit">
+            Sair
+        </button>
+    </form>
+}
