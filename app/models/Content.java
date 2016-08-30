@@ -10,4 +10,11 @@ public interface Content {
     public String getName();
 
     public String toString();
+
+    public String getPath();
+
+    public Directory getParent();
+
+    public void setParent(Directory dir);
+
 }

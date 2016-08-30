@@ -1,0 +1,26 @@
+@(archive: Archive)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@archive.getName()</title>
+    </head>
+
+    <body>
+        <form method="POST" action="@routes.LoggedUserController.editarArquivoTexto(archive.getPath)">
+            <div>
+                <label for="name" style="font-family: Calibri">Nome do Arquivo:</label>
+                <input type="text" name="name" id="name" value="@archive.getArchiveName" > <br>
+            </div>
+            <p></p>
+            <div>
+                <label for="texto" style="font-family: Calibri">Conteudo:</label>
+            </div>
+            <div>
+                <textarea name="texto" id="texto" rows="20" cols="90">@archive.getTexto</textarea>
+            </div>
+            <button type="submit" style="font-family: Calibri">Salvar</button>
+        </form>
+    </body>
+</html>

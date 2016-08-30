@@ -6,6 +6,9 @@
     <head>
         <title>@title</title>
         <h5 style="font-family: Calibri"> Cadastro Feito com Sucesso!</h5>
+        @if(flash.containsKey("sucesso")){
+            <h5 style="font-family: Calibri"> @flash.get("sucesso")</h5>
+        }
         <form method="get" action="@routes.Application.loginRender()"><button type="submit">Login</button></form>
     </head>
 </html>

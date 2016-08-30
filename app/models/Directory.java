@@ -10,6 +10,7 @@ public class Directory implements Content{
     private String name;
     private List<Archive> listArchive;
     private List<Directory> listDirectory;
+    private Directory parent;
 
     public Directory(String name){
         this.name = name;
@@ -17,19 +18,11 @@ public class Directory implements Content{
         this.listDirectory = new ArrayList<Directory>();
     }
 
-    // Adiciona Archive and Director
-    public void addContent (Content content , Content dir){
-        if(dir.getName().equals(this.name)) {
-            addContent(content);
-        }else {
-            ((Directory)dir).addContent(content);
-        }
-    }
 
     public void addContent(Content file){
         if (file.isDirectory()){
             this.listDirectory.add((Directory) file);
-        }else if (!file.isDirectory()) {
+        }else {
             listArchive.add((Archive) file);
         }
     }
@@ -45,6 +38,14 @@ public class Directory implements Content{
 
     public boolean isDirectory(){
         return true;
+    }
+
+    public boolean isEmpty() {
+        if(this.listArchive.size() == 0 && this.listDirectory.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //Getters
@@ -80,6 +81,41 @@ public class Directory implements Content{
         }else{
             return name;
         }
+    }
+
+    @Override
+    public Directory getParent() {
+        return this.parent;
+    }
+
+    @Override
+    public void setParent(Directory parent) {
+        this.parent = parent;
+    }
+
+    public String getPath() {
+        if (this.parent == null) {
+            return this.name;
+        } else {
+            return this.parent.getPath() + "/" + this.name;
+        }
+    }
+
+    public Content getContent(String contentName) {
+        if (contentName.contains(".")) {
+            for(Archive archive : listArchive) {
+                if (archive.getName().equals(contentName)) {
+                    return archive;
+                }
+            }
+        } else {
+            for(Directory directory : listDirectory) {
+                if (directory.getName().equals(contentName)) {
+                    return directory;
+                }
+            }
+        }
+        return null;
     }
 
     //ToString

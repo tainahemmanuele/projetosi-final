@@ -1,6 +1,8 @@
 package controllers;
 
-import models.Texto;
+import models.Archive;
+import models.Content;
+import models.Directory;
 import models.Usuario;
 import play.data.FormFactory;
 import play.mvc.*;
@@ -16,16 +18,21 @@ public class LoggedUserController extends Controller {
     @Inject
     private FormFactory formFactory;
 
-    public Result criaTexto(){
-        Texto informacaoTexto = formFactory.form(Texto.class).bindFromRequest().get();
-        informacaoTexto.getInformacaoTextual();
-        return ok(texto.render());
-    }
-
     public Result index() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        return ok(usuario.render(loggedUser));
+        return ok(usuario.render(loggedUser, loggedUser.getFolder()));
     }
+
+    public Result editDirectory(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Content content = loggedUser.getContent(path);
+        Directory directory = null;
+        if(content.isDirectory()){
+            directory = (Directory) content;
+        }
+        return ok(usuario.render(loggedUser, directory));
+    }
+
 
     public Result logout() {
         session().clear();
@@ -45,4 +52,31 @@ public class LoggedUserController extends Controller {
         loggedUser.setSenha(usuarioNovo.getSenha());
         return redirect(routes.LoggedUserController.index());
     }
+
+    public Result criarArquivoRender() {
+        return ok(texto.render());
+    }
+
+    public Result criarArquivoTexto() {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
+        loggedUser.adicionaArquivo(arquivo);
+        return redirect(routes.LoggedUserController.index());
+    }
+
+    public Result editarArquivoRender(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive archive = (Archive) loggedUser.getContent(path);
+        return ok(editarTexto.render(archive));
+    }
+
+    public Result editarArquivoTexto(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive novoArquivo = formFactory.form(Archive.class).bindFromRequest().get();
+        Archive archive = (Archive) loggedUser.getContent(path);
+        archive.setTexto(novoArquivo.getTexto());
+        archive.setName(novoArquivo.getName());
+        return redirect(routes.LoggedUserController.index());
+    }
+
 }

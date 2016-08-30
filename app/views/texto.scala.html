@@ -1,0 +1,11 @@
+@main("Criar Texto") {
+    <h2 style="font-family: Calibri">Novo Arquivo Texto</h2>
+
+    <form method="POST" action="@routes.LoggedUserController.criarArquivoTexto()">
+        <div>
+            <label style="font-family: Calibri">Nome do Arquivo:</label>
+            <input type="text" name="name" placeholder="Nome" style="font-family: Calibri"/> <br>
+        </div>
+        <button type="submit" style="font-family: Calibri">Criar</button>
+    </form>
+}
