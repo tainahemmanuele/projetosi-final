@@ -1,6 +1,6 @@
 package models;
 
-
+import  exceptions.*;
 /**
  * Created by Suelany on 05/08/2016.
  */
@@ -30,7 +30,7 @@ public class Archive implements Content {
     }
 
     public String getArchiveName() {
-        return  this.name.substring(0, this.name.indexOf("."));
+        return  this.name;
     }
 
     public void setName(String novoNome) {
@@ -75,10 +75,15 @@ public class Archive implements Content {
             indexCharacter++;
         }
         String newName = nomeDoArquivo.substring(indexCharacter, (nomeDoArquivo.length()));
-        if (!newName.endsWith(".txt")) {
-            newName = newName + ".txt";
+       if (newName.endsWith(".txt") || newName.endsWith(".md")) {
+              return  newName;
         }
-        return newName;
+
+        //default aq, so um place holder pq ainda não tem a caixinha la.
+else {
+        return newName + ".txt";
+    }
+
     }
 
 
