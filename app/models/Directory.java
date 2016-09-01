@@ -109,7 +109,7 @@ public class Directory implements Content{
     public Content getContent(String contentName) {
         if (contentName.contains(".")) {
             for (Archive archive : listArchive) {
-                if (archive.getName().equals(contentName)) {
+                if (archive.getNameType().equals(contentName)) {
                     return archive;
                 }
             }

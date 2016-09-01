@@ -17,7 +17,7 @@ public class Usuario {
     private String senha;
     private Directory folder;
 
-    public Usuario(){
+    public Usuario() {
         this.folder = new Directory("Pasta Pessoal");
     }
 
@@ -35,50 +35,50 @@ public class Usuario {
         this.folder = new Directory("Pasta Pessoal");
     }
 
-    // ADICIONA ARQUIVOS E PASTAS
-    public void addArchive(String nameArchive){
-        Content archive = new Archive(nameArchive);
+    // ADICIONA ARQUIVO (nome e tipo)
+    public void addArchive(String nameArchive, String type) {
+        Content archive = new Archive(nameArchive, type);
         this.folder.addContent(archive);
     }
 
-    // Adiciona um arquivo ja existente.
+    // Adiciona um objeto arquivo
     public void adicionaArquivo(Archive novoArquivo) {
         novoArquivo.setParent(this.folder);
         this.folder.addContent(novoArquivo);
     }
 
-    public void addFolder(String nameFolder){
+    // Adiciona Pasta (nome)
+    public void addFolder(String nameFolder) {
         Content directory = new Directory(nameFolder);
         this.folder.addContent(directory);
     }
 
 
-    public List<Archive> getArchives(){
+    //GETTERS AND SETTERS
+    public List<Archive> getArchives() {
         return this.folder.getListArchive();
     }
 
-    public List<Directory> getDirectory(){
+    public List<Directory> getDirectory() {
         return this.folder.getListDirectory();
     }
-
-
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) throws Exception{
+    public void setUsername(String username) throws Exception {
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
 
-        this.username =  username;
+        this.username = username;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) throws Exception{
+    public void setEmail(String email) throws Exception {
         if (!Verificador.verificaEmail(email))
             throw new InvalidEmailException();
 
@@ -94,23 +94,6 @@ public class Usuario {
             throw new EmptyStringException("Senha");
 
         this.senha = senha;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Usuario) {
-            Usuario usuario = (Usuario) obj;
-            if (usuario.getUsername().equals(this.getUsername())
-                    && usuario.getEmail() == this.getEmail()) {
-                return true;
-
-            } else {
-
-                return false;
-            }
-        }
-        return false;
     }
 
     public Content getContent(String path) {
@@ -129,4 +112,23 @@ public class Usuario {
     public void setFolderContent(Directory dir, Content conteudo) {
         conteudo.setParent(dir);
     }
+
+
+    // EQUALS
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Usuario) {
+            Usuario usuario = (Usuario) obj;
+            if (usuario.getUsername().equals(this.getUsername())
+                    && usuario.getEmail() == this.getEmail()) {
+                return true;
+
+            } else {
+
+                return false;
+            }
+        }
+        return false;
+    }
+
 }

@@ -4,7 +4,11 @@
     <form method="POST" action="@routes.LoggedUserController.criarArquivoTexto()">
         <div>
             <label style="font-family: Calibri">Nome do Arquivo:</label>
-            <input type="text" name="name" placeholder="Nome" style="font-family: Calibri"/> <br>
+            <input type="text" name="name" placeholder="Nome" style="font-family: Calibri"/>
+            <select name="type">
+                <option value="txt"> txt </option>
+                <option value="md"> md </option>
+            </select>
         </div>
         <button type="submit" style="font-family: Calibri">Criar</button>
     </form>

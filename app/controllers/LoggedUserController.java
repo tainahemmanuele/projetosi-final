@@ -89,7 +89,7 @@ public class LoggedUserController extends Controller {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Archive novoArquivo = formFactory.form(Archive.class).bindFromRequest().get();
         Archive archive = (Archive) loggedUser.getContent(path);
-        archive.setTexto(novoArquivo.getTexto());
+        archive.setTexto(novoArquivo.getText());
         archive.setName(novoArquivo.getName());
         return redirect(routes.LoggedUserController.index());
     }
