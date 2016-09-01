@@ -11,14 +11,14 @@
         <form method="POST" action="@routes.LoggedUserController.editarArquivoTexto(archive.getPath)">
             <div>
                 <label for="name" style="font-family: Calibri">Nome do Arquivo:</label>
-                <input type="text" name="name" id="name" value="@archive.getArchiveName" > <br>
+                <input type="text" name="name" id="name" value="@archive.getName" > <br>
             </div>
             <p></p>
             <div>
                 <label for="texto" style="font-family: Calibri">Conteudo:</label>
             </div>
             <div>
-                <textarea name="texto" id="texto" rows="20" cols="90">@archive.getTexto</textarea>
+                <textarea name="texto" id="texto" rows="20" cols="90">@archive.getText</textarea>
             </div>
             <button type="submit" style="font-family: Calibri">Salvar</button>
         </form>

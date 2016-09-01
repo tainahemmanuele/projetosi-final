@@ -2,7 +2,7 @@
 
     <h2 style="font-family: Calibri">Login</h2>
     @if(flash.containsKey("login")) {
-        <p style="background-color: rgba(255, 0, 0, 0.5)">@flash().get("login")</p>
+        <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("login")</p>
     }
     <form method="POST" action="@routes.Application.login()">
         <div>
@@ -14,6 +14,6 @@
             <input type="password" name="senha" placeholder="Senha" style="font-family: Calibri"/> <br>
         </div>
         <button type="submit" style="font-family: Calibri">Entrar</button>
-        <button formmethod="get" formaction="@routes.Application.index()" type="submit">Cadastre-se aqui!</button>
+        <button formmethod="get" formaction="@routes.Application.cadastroRender()" type="submit">Cadastre-se aqui!</button>
     </form>
 }

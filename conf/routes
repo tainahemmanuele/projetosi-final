@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                            controllers.Application.index()
+GET     /cadastro                    controllers.Application.cadastroRender()
 POST    /cadastra                    controllers.CadastroController.cadastraUsuario()
 
 GET /editar/                         controllers.LoggedUserController.editarRender()
@@ -11,11 +12,13 @@ POST /editarUsuario/                 controllers.LoggedUserController.editarCont
 POST /login/                         controllers.Application.login()
 GET /login/                          controllers.Application.loginRender()
 GET /user                            controllers.LoggedUserController.index()
-GET /user                            controllers.LoggedUserController.editDirectory(path)
+GET /user                            controllers.LoggedUserController.openDirectory(path)
 GET /logout                          controllers.LoggedUserController.logout()
 POST /texto                          controllers.LoggedUserController.criarArquivoTexto()
 GET /usuario                         controllers.LoggedUserController.criarArquivoRender()
 GET /listarPastas                    controllers.LoggedUserController.editarArquivoRender(path)
 POST /editarTexto                    controllers.LoggedUserController.editarArquivoTexto(path)
+GET /novoDiretorio                   controllers.LoggedUserController.newDirRender()
+POST /novoDiretorio                  controllers.LoggedUserController.newDirectory(path)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

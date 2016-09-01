@@ -1,27 +1,30 @@
 package models;
 
-import  exceptions.*;
+
 /**
  * Created by Suelany on 05/08/2016.
  */
 public class Archive implements Content {
     private String name;
-    private String texto;
+    private String text;
+    private String type;
     private Directory parent;
 
 
     public Archive(){
-        this.texto = "";
+        this.text = "";
     }
 
-    public Archive(String name){
-        this.name = standardName(name);
-        this.texto = "";
+    public Archive(String name, String type){
+        this.name = name;
+        this.type = type;
+        this.text = "";
     }
 
-    public Archive(String name, String texto){
-        this.name = standardName(name);
-        this.texto = texto;
+    public Archive(String name, String type, String text){
+        this.name = name;
+        this.type = type;
+        this.text = text;
     }
 
 
@@ -29,20 +32,26 @@ public class Archive implements Content {
         return this.name;
     }
 
-    public String getArchiveName() {
-        return  this.name;
+    public String getNameType() {
+        return  standardName(getName(), getType());
     }
 
-    public void setName(String novoNome) {
-        this.name = standardName(novoNome);
+    public void setName(String newName) {
+        this.name = newName;
     }
 
-    public String getTexto() {
-        return this.texto;
+    public String getType(){
+        return this.type;
+    }
+    public void setType(String newType){
+        this.type = newType;
+    }
+    public String getText() {
+        return this.text;
     }
 
-    public void setTexto(String novoTexto) {
-        this.texto = novoTexto;
+    public void setTexto(String newText) {
+        this.text = newText;
     }
 
     @Override
@@ -57,9 +66,9 @@ public class Archive implements Content {
 
     public String getPath() {
         if (this.parent == null) {
-            return this.name;
+            return getNameType();
         } else {
-            return this.parent.getPath() + "/" + this.name;
+            return this.parent.getPath() + "/" + getNameType();
         }
     }
 
@@ -69,23 +78,17 @@ public class Archive implements Content {
 
 
     // Este metodo remove os caracteres em branco do inicio do titulo.
-    private static String standardName(String nomeDoArquivo){
+    private static String standardName(String nameArchive, String type){
         int indexCharacter = 0;
-        while( nomeDoArquivo.charAt(indexCharacter) == ' '  ){
+        while( nameArchive.charAt(indexCharacter) == ' '  ){
             indexCharacter++;
         }
-        String newName = nomeDoArquivo.substring(indexCharacter, (nomeDoArquivo.length()));
-       if (newName.endsWith(".txt") || newName.endsWith(".md")) {
-              return  newName;
+        String newName = nameArchive.substring(indexCharacter, (nameArchive.length()));
+        if (!newName.endsWith("." + type) && (type == "md" || type == "txt")) {
+            newName = newName + "." + type;
+
         }
-
-        //default aq, so um place holder pq ainda não tem a caixinha la.
-else {
-        return newName + ".txt";
+        return newName;
     }
-
-    }
-
-
 
 }
