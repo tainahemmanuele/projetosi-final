@@ -6,7 +6,7 @@ package exceptions;
 public class InvalidEmailException extends InputException{
 
     public InvalidEmailException() {
-        super("Formato de email invalido.");
+        super("Formato de email invalido. Tente novamente.");
     }
 
 }

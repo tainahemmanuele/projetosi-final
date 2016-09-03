@@ -6,6 +6,14 @@ package exceptions;
 public class EmptyStringException extends InputException {
 
     public EmptyStringException(String name) {
-        super(name + " não pode ser vazio(a).");
+        super(name + " não pode ser vazio(a).Tente Novamente.");
+    }
+
+    public EmptyStringException() {
+        super("Campos do formulário não podem  ser vazios. Tente Novamente.");
+    }
+
+    public EmptyStringException(String name, String name2) {
+        super(name +" e " + name2+ " não podem ser  vazios. Tente Novamente");
     }
 }

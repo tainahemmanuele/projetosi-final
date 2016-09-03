@@ -24,5 +24,14 @@ public class Verificador {
         }
     }
 
+    public static boolean verificaFormularioCadastro(String username, String email, String senha){
+        if (username.trim().length() ==0 && email.trim().length() ==0 && senha.trim().length()==0 ) {
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
 
 }

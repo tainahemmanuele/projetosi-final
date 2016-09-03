@@ -6,6 +6,6 @@ package exceptions;
 public class UsuarioException extends Exception{
 
     public UsuarioException(String message) {
-        super("Já existe um usuario com esse "+message+". Tente Novamente");
+        super("Já existe um usuario com esse "+message+". Tente Novamente.");
     }
 }
