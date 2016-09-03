@@ -6,24 +6,25 @@
     <h2 style="font-family: Calibri">Cadastro</h2>
 
     @if(flash.containsKey("cadastro")) {
-        <p style="background-color: rgba(255, 0, 0, 0.5)">@flash().get("cadastro")</p>
+        <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("cadastro")</p>
     }
 
     <form method="POST" action="@routes.CadastroController.cadastraUsuario()">
         <div>
-            <label style="font-family: Calibri">nome:</label>
-            <input type="text" name="username" placeholder="nome" style="font-family: Calibri"/> <br>
+            <label style="font-family: Calibri">Nome:</label>
+            <input type="text" name="Username" placeholder="Nome" style="font-family: Calibri"/> <br>
         </div>
         <div>
-            <label style="font-family: Calibri">email:</label>
-            <input type="text" name="email" placeholder="email" style="font-family: Calibri"/> <br>
+            <label style="font-family: Calibri">Email:</label>
+            <input type="text" name="Email" placeholder="Email" style="font-family: Calibri"/> <br>
         </div>
         <div>
-            <label style="font-family: Calibri">senha:</label>
-            <input type="password" name="senha" placeholder="senha" style="font-family: Calibri"/> <br>
+            <label style="font-family: Calibri">Senha:</label>
+            <input type="password" name="Senha" placeholder="Senha" style="font-family: Calibri"/> <br>
         </div>
         <button type="submit" style="font-family: Calibri">Ok</button>
-        <button type="reset" style="font-family: Calibri">Cancelar</button>
+        <button type="reset" style="font-family: Calibri">Limpar</button>
+        <input type="button" value="Login" onClick="location.href='@routes.Application.index()'">
     </form>
 
 }

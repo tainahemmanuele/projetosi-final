@@ -22,7 +22,7 @@ public class Usuario {
     }
 
     public Usuario(String username, String email, String senha) throws InputException {
-        if (Verificador.verificaFormularioCadastro(username,email,senha))
+        if (!Verificador.verificaString(username) && !Verificador.verificaString(email) && !Verificador.verificaString(senha))
             throw new EmptyStringException();
         if(!Verificador.verificaString(username) && !Verificador.verificaString(email))
             throw new EmptyStringException("Username", "Email");
