@@ -84,7 +84,7 @@ public class Archive implements Content {
             indexCharacter++;
         }
         String newName = nameArchive.substring(indexCharacter, (nameArchive.length()));
-        if (!newName.endsWith("." + type) && (type == "md" || type == "txt")) {
+        if (!newName.endsWith("." + type)) {
             newName = newName + "." + type;
 
         }
