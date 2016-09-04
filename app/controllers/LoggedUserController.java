@@ -61,8 +61,7 @@ public class LoggedUserController extends Controller {
     public Result criarArquivoTexto() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
-        if(arquivo.getType() == "txt" || arquivo.getType() == "md"){
-            loggedUser.adicionaArquivo(arquivo);}
+            loggedUser.adicionaArquivo(arquivo);
         return redirect(routes.LoggedUserController.index());
     }
 
