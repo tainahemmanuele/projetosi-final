@@ -10,7 +10,7 @@ public class EmptyStringException extends InputException {
     }
 
     public EmptyStringException() {
-        super("Campos do formulário não podem  ser vazios. Tente Novamente.");
+        super("Campos do formulário não podem ser vazios. Tente Novamente.");
     }
 
     public EmptyStringException(String name, String name2) {
