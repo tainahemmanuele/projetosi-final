@@ -60,9 +60,10 @@ public class LoggedUserController extends Controller {
 
     public Result criarArquivoTexto() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
         Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
-            loggedUser.adicionaArquivo(arquivo);
-        return redirect(routes.LoggedUserController.index());
+        directory.addContent(arquivo);
+        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 
     public Result newDirRender() {
@@ -70,13 +71,12 @@ public class LoggedUserController extends Controller {
         return ok(newDirectory.render(path));
     }
 
-    public Result newDirectory(String path) {
+    public Result newDirectory() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Directory directory = (Directory) loggedUser.getContent(path);
+        Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
         Directory newDirectory = formFactory.form(Directory.class).bindFromRequest().get();
-        newDirectory.setParent(directory);
         directory.addContent(newDirectory);
-        return redirect(routes.LoggedUserController.openDirectory(directory.getPath()));
+        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 
     public Result editarArquivoRender(String path) {
@@ -91,7 +91,7 @@ public class LoggedUserController extends Controller {
         Archive archive = (Archive) loggedUser.getContent(path);
         archive.setTexto(novoArquivo.getText());
         archive.setName(novoArquivo.getName());
-        return redirect(routes.LoggedUserController.index());
+        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 
 }

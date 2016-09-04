@@ -6,7 +6,7 @@
     @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).isEmpty() ) {
         <p> Pasta Vazia </p>
     } else {
-        <ul>
+        <ul style="border: #000000">
             @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
                 <li><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getNameType <br /> </a></li>
             }

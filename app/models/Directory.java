@@ -25,10 +25,11 @@ public class Directory implements Content{
 
 
     public void addContent(Content file){
+        file.setParent(this);
         if (file.isDirectory()){
             this.listDirectory.add((Directory) file);
         }else {
-            listArchive.add((Archive) file);
+            this.listArchive.add((Archive) file);
         }
     }
 

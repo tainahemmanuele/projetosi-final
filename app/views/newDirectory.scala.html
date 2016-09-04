@@ -3,9 +3,9 @@
 @main("Novo Diretorio") {
     <h2 style="font-family: Calibri">Criar novo diretorio</h2>
 
-    <p>O diretorio sera criado em @path</p>
+    <p>Criando novo diretorio em @path</p>
 
-    <form method="POST" action="@routes.LoggedUserController.newDirectory(path)">
+    <form method="POST" action="@routes.LoggedUserController.newDirectory()">
         <div>
             <label style="font-family: Calibri">Nome do Diretorio:</label>
             <input type="text" name="name" placeholder="Nome" style="font-family: Calibri"/> <br>
