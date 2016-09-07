@@ -4,6 +4,10 @@
     @if(flash.containsKey("login")) {
         <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("login")</p>
     }
+
+    @if(flash.containsKey("erro")) {
+        <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("erro")</p>
+    }
     <form method="POST" action="@routes.Application.login()">
         <div>
             <label style="font-family: Calibri">Login:</label>

@@ -5,6 +5,7 @@ import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
 import util.FormularioLogin;
+import util.Secured;
 import util.Verificador;
 import views.html.*;
 import models.Usuario;
@@ -23,6 +24,7 @@ public class Application extends Controller {
     private static List<Usuario> listaUsuarios = new ArrayList<>();;
 
 
+    @Security.Authenticated(Secured.class)
     public Result index() {
         return ok(login.render());
     }
@@ -35,6 +37,7 @@ public class Application extends Controller {
     public Result loginRender() {
         return ok(login.render());
     }
+
 
     public Result login(){
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
