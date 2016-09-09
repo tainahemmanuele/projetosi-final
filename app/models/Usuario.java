@@ -17,7 +17,7 @@ public class Usuario {
     private String senha;
     private Directory folder;
 
-    public Usuario() {
+    public Usuario() throws EmptyStringException {
         this.folder = new Directory("Pasta Pessoal");
     }
 
@@ -45,25 +45,6 @@ public class Usuario {
         this.folder = new Directory("Pasta Pessoal");
     }
 
-    // ADICIONA ARQUIVO (nome e tipo)
-    public void addArchive(String nameArchive, String type) {
-        Content archive = new Archive(nameArchive, type);
-        this.folder.addContent(archive);
-    }
-
-    // Adiciona um objeto arquivo
-    public void adicionaArquivo(Archive novoArquivo) {
-        novoArquivo.setParent(this.folder);
-        this.folder.addContent(novoArquivo);
-    }
-
-    // Adiciona Pasta (nome)
-    public void addFolder(String nameFolder) {
-        Content directory = new Directory(nameFolder);
-        this.folder.addContent(directory);
-    }
-
-
     //GETTERS AND SETTERS
     public List<Archive> getArchives() {
         return this.folder.getListArchive();
@@ -77,7 +58,7 @@ public class Usuario {
         return username;
     }
 
-    public void setUsername(String username) throws Exception {
+    public void setUsername(String username) throws InputException {
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
 
@@ -88,7 +69,7 @@ public class Usuario {
         return email;
     }
 
-    public void setEmail(String email) throws Exception {
+    public void setEmail(String email) throws InputException {
         if (!Verificador.verificaEmail(email))
             throw new InvalidEmailException();
 
@@ -99,7 +80,7 @@ public class Usuario {
         return senha;
     }
 
-    public void setSenha(String senha) throws Exception {
+    public void setSenha(String senha) throws InputException {
         if (!Verificador.verificaString(senha))
             throw new EmptyStringException("Senha");
 

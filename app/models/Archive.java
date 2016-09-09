@@ -1,6 +1,9 @@
 package models;
 
 
+import exceptions.EmptyStringException;
+import util.Verificador;
+
 /**
  * Created by Suelany on 05/08/2016.
  */
@@ -15,7 +18,10 @@ public class Archive implements Content {
         this.text = "";
     }
 
-    public Archive(String name, String type){
+    public Archive(String name, String type) throws EmptyStringException {
+        if (!Verificador.verificaString(name)) {
+            throw new EmptyStringException("Nome do arquivo");
+        }
         this.name = name;
         this.type = type;
         this.text = "";
@@ -91,4 +97,20 @@ public class Archive implements Content {
         return newName;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Archive) {
+            Archive archive = (Archive) object;
+            return name.equals(archive.getName()) && type.equals(archive.getType());
+        } else
+            return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
 }

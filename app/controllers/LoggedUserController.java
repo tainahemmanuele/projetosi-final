@@ -1,11 +1,15 @@
 package controllers;
 
+import exceptions.AlreadyExistingContentException;
+import exceptions.InputException;
 import models.Archive;
 import models.Content;
 import models.Directory;
 import models.Usuario;
 import play.data.FormFactory;
 import play.mvc.*;
+import util.FormularioConteudo;
+import util.FormularioEdicaoConta;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -45,12 +49,23 @@ public class LoggedUserController extends Controller {
         return ok(editar.render(loggedUser));
     }
 
-    public Result editarConta()throws Exception{
+    public Result editarConta() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Usuario usuarioNovo = formFactory.form(Usuario.class).bindFromRequest().get();
-        loggedUser.setUsername(usuarioNovo.getUsername());
-        loggedUser.setEmail(usuarioNovo.getEmail());
-        loggedUser.setSenha(usuarioNovo.getSenha());
+        FormularioEdicaoConta formularioEdicao = formFactory.form(FormularioEdicaoConta.class).bindFromRequest().get();
+        if (loggedUser.getSenha().equals(formularioEdicao.getSenhaAtual())) {
+            if (formularioEdicao.getSenhaNova1().equals(formularioEdicao.getSenhaNova2())) {
+                try {
+                    loggedUser.setUsername(formularioEdicao.getUsername());
+                    loggedUser.setEmail(formularioEdicao.getEmail());
+                    session("email", formularioEdicao.getEmail());
+                    loggedUser.setSenha(formularioEdicao.getSenhaNova1());
+                } catch (InputException e) {
+                    flash("erroEdit", e.getMessage());
+                }
+            } else
+                flash("erroEdit", "As senhas não correspondem.");
+        } else
+            flash("erroEdit", "Senha incorreta.");
         return redirect(routes.LoggedUserController.index());
     }
 
@@ -61,8 +76,13 @@ public class LoggedUserController extends Controller {
     public Result criarArquivoTexto() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
-        Archive arquivo = formFactory.form(Archive.class).bindFromRequest().get();
-        directory.addContent(arquivo);
+        FormularioConteudo formularioConteudo = formFactory.form(FormularioConteudo.class).bindFromRequest().get();
+        try {
+            Archive arquivo = new Archive(formularioConteudo.getName(), formularioConteudo.getType());
+            directory.addContent(arquivo);
+        } catch (Exception e) {
+            flash("erroNew", e.getMessage());
+        }
         return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 
@@ -74,8 +94,13 @@ public class LoggedUserController extends Controller {
     public Result newDirectory() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
-        Directory newDirectory = formFactory.form(Directory.class).bindFromRequest().get();
-        directory.addContent(newDirectory);
+        FormularioConteudo formularioConteudo = formFactory.form(FormularioConteudo.class).bindFromRequest().get();
+        try {
+            Directory newDirectory = new Directory(formularioConteudo.getName());
+            directory.addContent(newDirectory);
+        } catch (Exception e) {
+            flash("erroNew", e.getMessage());
+        }
         return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 

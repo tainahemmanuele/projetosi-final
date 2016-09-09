@@ -6,7 +6,7 @@
     <h2 style="font-family: Calibri">Cadastro</h2>
 
     @if(flash.containsKey("cadastro")) {
-        <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("cadastro")</p>
+        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("cadastro")</p>
     }
 
     <form method="POST" action="@routes.CadastroController.cadastraUsuario()">
