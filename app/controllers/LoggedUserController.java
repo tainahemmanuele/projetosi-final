@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Archive;
-import models.Content;
-import models.Directory;
-import models.Usuario;
+import models.*;
 import play.data.FormFactory;
 import play.mvc.*;
 import views.html.*;
@@ -79,6 +76,12 @@ public class LoggedUserController extends Controller {
         return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
     }
 
+    public Result verArquivo(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive archive = (Archive) loggedUser.getContent(path);
+        return ok(viewTexto.render(archive));
+    }
+
     public Result editarArquivoRender(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         Archive archive = (Archive) loggedUser.getContent(path);
@@ -91,7 +94,22 @@ public class LoggedUserController extends Controller {
         Archive archive = (Archive) loggedUser.getContent(path);
         archive.setTexto(novoArquivo.getText());
         archive.setName(novoArquivo.getName());
-        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
+        return redirect(routes.LoggedUserController.verArquivo(path));
+    }
+
+    public Result excluirArquivo(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Archive archive = (Archive) loggedUser.getContent(path);
+        Directory folder = archive.getParent();
+        folder.delContent(archive);
+        return redirect(routes.LoggedUserController.openDirectory(folder.getPath()));
+    }
+
+    public Result compartilharArquivo(String emailUser, String path, String tipo) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Usuario sharingUser = Application.getUsuarioEmail(emailUser);
+        loggedUser.compartilhar(sharingUser, tipo, path);
+        return ok();
     }
 
 }

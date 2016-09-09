@@ -10,7 +10,7 @@
     <h2 style="font-family: Calibri">@directory.getName</h2>
 
     @for(archive <- directory.getListArchive){
-      <p><a href="@routes.LoggedUserController.editarArquivoRender(archive.getPath)"> @archive.getName <br /> </a></p>
+      <p><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getName <br /> </a></p>
     }
 
     @for(directory <- directory.getListDirectory){

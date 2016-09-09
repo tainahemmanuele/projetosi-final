@@ -16,9 +16,12 @@ public class Usuario {
     private String email;
     private String senha;
     private Directory folder;
+    private Directory compartilhados;
 
     public Usuario() {
         this.folder = new Directory("Pasta Pessoal");
+        this.compartilhados = new Directory("Itens Compartilhados");
+        this.folder.addContent(compartilhados);
     }
 
     public Usuario(String username, String email, String senha) throws InputException {
@@ -43,6 +46,8 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.folder = new Directory("Pasta Pessoal");
+        this.compartilhados = new Directory("Itens Compartilhados");
+        this.folder.addContent(compartilhados);
     }
 
     // ADICIONA ARQUIVO (nome e tipo)
@@ -71,6 +76,10 @@ public class Usuario {
 
     public List<Directory> getDirectory() {
         return this.folder.getListDirectory();
+    }
+
+    public Directory getCompartilhados() {
+        return this.compartilhados;
     }
 
     public String getUsername() {
@@ -121,6 +130,14 @@ public class Usuario {
 
     public void setFolderContent(Directory dir, Content conteudo) {
         conteudo.setParent(dir);
+    }
+
+    public void compartilhar(Usuario user, String tipo, String path) {
+        Content arquivo = getContent(path);
+        if (!arquivo.isDirectory()) {
+            ((Archive) arquivo).compartilhar(user, tipo);
+            user.getCompartilhados().addContent(arquivo);
+        }
     }
 
 

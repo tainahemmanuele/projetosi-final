@@ -1,6 +1,9 @@
 package models;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Suelany on 05/08/2016.
  */
@@ -9,22 +12,27 @@ public class Archive implements Content {
     private String text;
     private String type;
     private Directory parent;
+    private Sharing compartilhamento;
+
 
 
     public Archive(){
         this.text = "";
+        this.compartilhamento = new Sharing();
     }
 
     public Archive(String name, String type){
         this.name = name;
         this.type = type;
         this.text = "";
+        this.compartilhamento = new Sharing();
     }
 
     public Archive(String name, String type, String text){
         this.name = name;
         this.type = type;
         this.text = text;
+        this.compartilhamento = new Sharing();
     }
 
 
@@ -54,6 +62,14 @@ public class Archive implements Content {
         this.text = newText;
     }
 
+    public Sharing getCompartilhamento() {
+        return this.compartilhamento;
+    }
+
+    public void setCompartilhamento(Sharing compartilhamento) {
+        this.compartilhamento = compartilhamento;
+    }
+
     @Override
     public Directory getParent() {
         return this.parent;
@@ -74,6 +90,14 @@ public class Archive implements Content {
 
     public boolean isDirectory(){
         return false;
+    }
+
+    public boolean isShared() {
+        return this.compartilhamento.getStatus();
+    }
+
+    public void compartilhar(Usuario user, String tipo) {
+        this.compartilhamento.addCompartilhamento(user, tipo);
     }
 
 
