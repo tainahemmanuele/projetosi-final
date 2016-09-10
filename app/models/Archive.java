@@ -98,8 +98,9 @@ public class Archive implements Content {
         return this.compartilhamento.getStatus();
     }
 
-    public void compartilhar(Usuario user, String tipo) {
+    public void compartilhar(Usuario user, String tipo, String username) {
         this.compartilhamento.addCompartilhamento(user, tipo);
+        user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName());
     }
 
 

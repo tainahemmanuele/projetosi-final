@@ -6,6 +6,7 @@ import exceptions.InvalidEmailException;
 import exceptions.InputException;
 import util.Verificador;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -18,6 +19,7 @@ public class Usuario {
     private String senha;
     private Directory folder;
     private Directory compartilhados;
+    private ArrayList<String> notificacoes;
 
     public Usuario() throws EmptyStringException {
         this.folder = new Directory("Pasta Pessoal");
@@ -125,7 +127,7 @@ public class Usuario {
     public void compartilhar(Usuario user, String tipo, String path) throws AlreadyExistingContentException {
         Content arquivo = getContent(path);
         if (!arquivo.isDirectory() && this.compartilhados.hasArchive((Archive) arquivo)) {
-            ((Archive) arquivo).compartilhar(user, tipo);
+            ((Archive) arquivo).compartilhar(user, tipo, this.getUsername());
             user.getCompartilhados().addContent(arquivo);
         }
     }
@@ -148,4 +150,11 @@ public class Usuario {
         return false;
     }
 
+    public ArrayList<String> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(ArrayList<String> notificacoes) {
+        this.notificacoes = notificacoes;
+    }
 }
