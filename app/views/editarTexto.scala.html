@@ -21,6 +21,7 @@
                 <textarea name="texto" id="texto" rows="20" cols="90">@archive.getText</textarea>
             </div>
             <button type="submit" style="font-family: Calibri">Salvar</button>
+            <input type="button" value="Cancelar" onClick="location.href='@routes.LoggedUserController.verArquivo(archive.getPath)'">
         </form>
     </body>
 </html>

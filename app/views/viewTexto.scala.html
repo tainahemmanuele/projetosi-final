@@ -1,0 +1,27 @@
+@(archive: Archive)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>@archive.getName</title>
+  </head>
+  <body>
+    @if(flash.containsKey("repeticao")) {
+      <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("repeticao")</p>
+    }
+    <h2>@archive.getNameType</h2>
+    <textarea disabled rows="20" cols="90">@archive.getText</textarea>
+    <form>
+      <button formmethod="get" formaction="@routes.LoggedUserController.editarArquivoRender(archive.getPath)" type="submit">Editar</button>
+      <button formmethod="get" formaction="@routes.LoggedUserController.excluirArquivo(archive.getPath)" type="submit">Excluir</button>
+    </form>
+    <p></p>
+    <form>
+      <button formmethod="get" formaction="@routes.LoggedUserController.openDirectory(session().get("dir"))" type="submit">
+      Voltar
+      </button>
+    </form>
+
+  </body>
+</html>

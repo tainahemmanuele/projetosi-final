@@ -1,6 +1,10 @@
 @(user: Usuario)
 
 @home(user.getUsername) {
+    @if(flash().containsKey("erroEdit")) {
+        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroEdit")</p>
+    }
+
     <h3>@user.getContent(session().get("dir")).getPath</h3>
 
     @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).isEmpty() ) {
@@ -15,6 +19,10 @@
                     <img src="@routes.Assets.at("images/folder.png")" height="16" width="16" /> @dir.getName <br /> </a></li>
             }
         </ul>
+    }
+
+    @if(flash().containsKey("erroNew")) {
+        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroNew")</p>
     }
 
     <form>

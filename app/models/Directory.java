@@ -1,5 +1,9 @@
 package models;
 
+import exceptions.AlreadyExistingContentException;
+import exceptions.EmptyStringException;
+import util.Verificador;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +21,35 @@ public class Directory implements Content{
         this.listDirectory = new ArrayList<Directory>();
     }
 
-    public Directory(String name) {
+    public Directory(String name) throws EmptyStringException {
+        if (!Verificador.verificaString(name)) {
+            throw new EmptyStringException("Nome do diretorio");
+        }
         this.name = name;
         this.listArchive = new ArrayList<Archive>();
         this.listDirectory = new ArrayList<Directory>();
     }
 
+    public boolean hasDirectory(Directory directory) {
+        return listDirectory.contains(directory);
+    }
 
-    public void addContent(Content file){
+    public boolean hasArchive(Archive archive) {
+        return listArchive.contains(archive);
+    }
+
+    public void addContent(Content file) throws AlreadyExistingContentException {
         file.setParent(this);
         if (file.isDirectory()){
-            this.listDirectory.add((Directory) file);
+            if (!hasDirectory((Directory) file))
+                this.listDirectory.add((Directory) file);
+            else
+                throw new AlreadyExistingContentException(file.getName());
         }else {
-            this.listArchive.add((Archive) file);
+            if (!hasArchive((Archive) file))
+                this.listArchive.add((Archive) file);
+            else
+                throw new AlreadyExistingContentException(((Archive) file).getNameType());
         }
     }
 
@@ -122,6 +142,20 @@ public class Directory implements Content{
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Directory) {
+            Directory directory = (Directory) object;
+            return name.equals(directory.getName());
+        } else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     //ToString

@@ -1,5 +1,6 @@
 package models;
 
+import exceptions.AlreadyExistingContentException;
 import exceptions.EmptyStringException;
 import exceptions.InvalidEmailException;
 import exceptions.InputException;
@@ -18,10 +19,14 @@ public class Usuario {
     private Directory folder;
     private Directory compartilhados;
 
-    public Usuario() {
+    public Usuario() throws EmptyStringException {
         this.folder = new Directory("Pasta Pessoal");
         this.compartilhados = new Directory("Itens Compartilhados");
-        this.folder.addContent(compartilhados);
+        try {
+            this.folder.addContent(compartilhados);
+        } catch (AlreadyExistingContentException e){
+            throw new RuntimeException("Erro do sistema");
+        }
     }
 
     public Usuario(String username, String email, String senha) throws InputException {
@@ -47,27 +52,12 @@ public class Usuario {
         this.senha = senha;
         this.folder = new Directory("Pasta Pessoal");
         this.compartilhados = new Directory("Itens Compartilhados");
-        this.folder.addContent(compartilhados);
+        try {
+            this.folder.addContent(compartilhados);
+        } catch (AlreadyExistingContentException e){
+            throw new RuntimeException("Erro do sistema");
+        }
     }
-
-    // ADICIONA ARQUIVO (nome e tipo)
-    public void addArchive(String nameArchive, String type) {
-        Content archive = new Archive(nameArchive, type);
-        this.folder.addContent(archive);
-    }
-
-    // Adiciona um objeto arquivo
-    public void adicionaArquivo(Archive novoArquivo) {
-        novoArquivo.setParent(this.folder);
-        this.folder.addContent(novoArquivo);
-    }
-
-    // Adiciona Pasta (nome)
-    public void addFolder(String nameFolder) {
-        Content directory = new Directory(nameFolder);
-        this.folder.addContent(directory);
-    }
-
 
     //GETTERS AND SETTERS
     public List<Archive> getArchives() {
@@ -86,7 +76,7 @@ public class Usuario {
         return username;
     }
 
-    public void setUsername(String username) throws Exception {
+    public void setUsername(String username) throws InputException {
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
 
@@ -97,7 +87,7 @@ public class Usuario {
         return email;
     }
 
-    public void setEmail(String email) throws Exception {
+    public void setEmail(String email) throws InputException {
         if (!Verificador.verificaEmail(email))
             throw new InvalidEmailException();
 
@@ -108,7 +98,7 @@ public class Usuario {
         return senha;
     }
 
-    public void setSenha(String senha) throws Exception {
+    public void setSenha(String senha) throws InputException {
         if (!Verificador.verificaString(senha))
             throw new EmptyStringException("Senha");
 
@@ -132,9 +122,9 @@ public class Usuario {
         conteudo.setParent(dir);
     }
 
-    public void compartilhar(Usuario user, String tipo, String path) {
+    public void compartilhar(Usuario user, String tipo, String path) throws AlreadyExistingContentException {
         Content arquivo = getContent(path);
-        if (!arquivo.isDirectory()) {
+        if (!arquivo.isDirectory() && this.compartilhados.hasArchive((Archive) arquivo)) {
             ((Archive) arquivo).compartilhar(user, tipo);
             user.getCompartilhados().addContent(arquivo);
         }
