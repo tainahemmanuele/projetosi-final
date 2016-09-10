@@ -1,6 +1,6 @@
 @(user: Usuario)
 
-@home(user.getUsername) {
+@home(user.getUsername, user.getNotificacoes) {
     @if(flash().containsKey("erroEdit")) {
         <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroEdit")</p>
     }

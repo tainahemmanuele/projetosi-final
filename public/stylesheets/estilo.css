@@ -1,0 +1,74 @@
+
+#notification_container {
+    position:relative;
+}
+
+/* MOSTRA A BUTTON COMO UM CÍRCULO (OPCIONAL) */
+#notification_button {
+    width:22px;
+    height:22px;
+    line-height:22px;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    background:#000000;
+    cursor:pointer;
+}
+
+/* CONTADOR DE NOTIFCAÇÃO EM VERMELHO */
+#notification_counter {
+    display:none;
+    position:absolute;
+    background:#E1141E;
+    color:#FFF;
+    font-size:12px;
+    font-weight:normal;
+    padding:1px 3px;
+    margin:-8px 0 0 25px;
+    border-radius:2px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    z-index:1;
+}
+
+/* AS NOTIFICAÇÕES FICAM ESCONDIDAS QUANDO A PÁGINA CARREGA. */
+#notifications {
+    display:none;
+    width:430px;
+    position:absolute;
+    top:30px;
+    left:0;
+    background:#FFF;
+    border:solid 1px rgba(100, 100, 100, .20);
+    -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
+    z-index: 0;
+}
+/* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+#notifications:before {
+    content: '';
+    display:none;
+    width:0;
+    height:0;
+    color:#000000;
+    border:10px solid #CCC;
+    border-color:transparent transparent #FFF;
+    margin-top:-20px;
+    margin-left:10px;
+}
+
+.seeAll {
+    background:#F6F7F8;
+    padding:8px;
+    font-size:12px;
+    font-weight:bold;
+    border-top:solid 1px rgba(100, 100, 100, .30);
+    text-align:center;
+}
+.seeAll a {
+    color:#3b5998;
+}
+.seeAll a:hover {
+    background:#F6F7F8;
+    color:#3b5998;
+    text-decoration:underline;
+}

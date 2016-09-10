@@ -54,11 +54,14 @@ public class Usuario {
         this.senha = senha;
         this.folder = new Directory("Pasta Pessoal");
         this.compartilhados = new Directory("Itens Compartilhados");
+        this.notificacoes = new ArrayList<String>();
+        this.notificacoes.add("Bem vindo ao TextDropBox");
         try {
             this.folder.addContent(compartilhados);
         } catch (AlreadyExistingContentException e){
             throw new RuntimeException("Erro do sistema");
         }
+
     }
 
     //GETTERS AND SETTERS
