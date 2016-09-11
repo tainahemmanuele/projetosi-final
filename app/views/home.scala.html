@@ -12,22 +12,25 @@
         <body>
             <body style="margin:0;padding:0;">
                 <div>
+
                         <li id="notification_container">
                             <div id="notification_counter"></div>   <!--Aqui mostra a quantidade de notificações.-->
 
-                            <!--Círculo com um dropdown de notificação -->
-                            <div id="notification_button"></div>
 
-                                <!--Notificação dropdown-->
+                            <!--Círculo com um dropdown de notificação -->
+                            <div id="notification_button">Notificações</div>
+
+                            <!--Notificação dropdown-->
                             <div id="notifications">
-                                <h3>Notificacoes</h3>
-                                  @for(notificacao <- notificacoes){
-                                      @notificacao
-                                  }
-                                <div style="height:300px;"></div>
+                                @for(notificacao <- notificacoes.reverse) {
+                                   <p>@notificacao</p>
+                                }
+
+                                <div style="height: 300px;"></div>
                                 <div class="seeAll"><a href="#">Ver todos</a></div>
                             </div>
                         </li>
+
                 </div>
             </body>
 

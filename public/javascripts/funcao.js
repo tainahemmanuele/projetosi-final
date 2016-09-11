@@ -4,12 +4,11 @@
 $(document).ready(function () {
     $('#notification_counter')
         .css({ opacity: 0 })
-        .text('1')              // Aqui você adiciona a quantidade de novas notificações(o que vem do server, por exemplo.).
+        .text('!')              // Aqui você adiciona a quantidade de novas notificações(o que vem do server, por exemplo.).
         .css({ top: '-10px' })
         .animate({ top: '-2px', opacity: 1 }, 500);
 
     $('#notification_button').click(function () {
-
         // Ativa(Mostrando ou escondendo) a janela de notificações.
         $('#notifications').fadeToggle('fast', 'linear', function () {
             if ($('#notifications').is(':hidden')) {

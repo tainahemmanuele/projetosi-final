@@ -56,6 +56,7 @@ public class Usuario {
         this.compartilhados = new Directory("Itens Compartilhados");
         this.notificacoes = new ArrayList<String>();
         this.notificacoes.add("Bem vindo ao TextDropBox");
+
         try {
             this.folder.addContent(compartilhados);
         } catch (AlreadyExistingContentException e){
@@ -134,6 +135,7 @@ public class Usuario {
             user.getCompartilhados().addContent(arquivo);
         }
     }
+
 
 
     // EQUALS

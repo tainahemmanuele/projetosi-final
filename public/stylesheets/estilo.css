@@ -5,19 +5,30 @@
 
 /* MOSTRA A BUTTON COMO UM CÍRCULO (OPCIONAL) */
 #notification_button {
-    width:22px;
-    height:22px;
-    line-height:22px;
-    border-radius:50%;
-    -moz-border-radius:50%;
-    -webkit-border-radius:50%;
-    background:#000000;
+    background-color:#000000;
+    -moz-border-radius:36px;
+    -webkit-border-radius:36px;
+    border-radius:36px;
+    display:inline-block;
     cursor:pointer;
+    color:#ffffff;
+    font-family:Calibri;
+    font-size:17px;
+    padding:10px 21px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #020801;
+}
+#notification_button:hover {
+    background-color:#251d99;
+}
+#notification_button:active {
+    position:relative;
+    top:1px;
 }
 
 /* CONTADOR DE NOTIFCAÇÃO EM VERMELHO */
 #notification_counter {
-    display:none;
+    display:block;
     position:absolute;
     background:#E1141E;
     color:#FFF;
