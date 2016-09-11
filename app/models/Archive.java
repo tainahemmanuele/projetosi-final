@@ -109,7 +109,7 @@ public class Archive implements IArchive {
 
     public void compartilhar(Usuario user, String tipo, String username) {
         this.compartilhamento.addCompartilhamento(user, tipo);
-        user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName());
+        user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName() +"."+ this.type);
     }
 
     public void sairCompartilhamento(Usuario user) {
