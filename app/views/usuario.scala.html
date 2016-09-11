@@ -32,12 +32,14 @@
             </button>
         }
 
-        <button formmethod="get" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
-            Novo Arquivo
-        </button>
+        @if(!(user.getContent(session().get("dir")).equals(user.getCompartilhados))) {
+            <button formmethod="get" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
+                Novo Arquivo
+            </button>
 
-        <button formmethod="get" formaction="@routes.LoggedUserController.newDirRender()" type="submit">
-            Novo Diretorio
-        </button>
+            <button formmethod="get" formaction="@routes.LoggedUserController.newDirRender()" type="submit">
+                Novo Diretorio
+            </button>
+        }
     </form>
 }

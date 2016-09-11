@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class Directory implements Content{
     private String name;
-    private List<Archive> listArchive;
+    private List<IArchive> listArchive;
     private List<Directory> listDirectory;
     private Directory parent;
 
     public Directory() {
-        this.listArchive = new ArrayList<Archive>();
+        this.listArchive = new ArrayList<IArchive>();
         this.listDirectory = new ArrayList<Directory>();
     }
 
@@ -26,7 +26,7 @@ public class Directory implements Content{
             throw new EmptyStringException("Nome do diretorio");
         }
         this.name = name;
-        this.listArchive = new ArrayList<Archive>();
+        this.listArchive = new ArrayList<IArchive>();
         this.listDirectory = new ArrayList<Directory>();
     }
 
@@ -34,7 +34,7 @@ public class Directory implements Content{
         return listDirectory.contains(directory);
     }
 
-    public boolean hasArchive(Archive archive) {
+    public boolean hasArchive(IArchive archive) {
         return listArchive.contains(archive);
     }
 
@@ -46,10 +46,10 @@ public class Directory implements Content{
             else
                 throw new AlreadyExistingContentException(file.getName());
         }else {
-            if (!hasArchive((Archive) file))
-                this.listArchive.add((Archive) file);
+            if (!hasArchive((IArchive) file))
+                this.listArchive.add((IArchive) file);
             else
-                throw new AlreadyExistingContentException(((Archive) file).getNameType());
+                throw new AlreadyExistingContentException(((IArchive) file).getNameType());
         }
     }
 
@@ -97,7 +97,7 @@ public class Directory implements Content{
        return this.listDirectory;
     }
 
-    public List<Archive> getListArchive(){
+    public List<IArchive> getListArchive(){
        return this.listArchive;
     }
 
@@ -129,7 +129,7 @@ public class Directory implements Content{
 
     public Content getContent(String contentName) {
         if (contentName.contains(".")) {
-            for (Archive archive : listArchive) {
+            for (IArchive archive : listArchive) {
                 if (archive.getNameType().equals(contentName)) {
                     return archive;
                 }

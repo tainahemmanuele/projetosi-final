@@ -7,12 +7,13 @@ import util.Verificador;
 /**
  * Created by Suelany on 05/08/2016.
  */
-public class Archive implements Content {
+public class Archive implements IArchive {
     private String name;
     private String text;
     private String type;
     private Directory parent;
     private Sharing compartilhamento;
+    Usuario owner;
 
 
     public Archive(){
@@ -72,6 +73,14 @@ public class Archive implements Content {
         this.compartilhamento = compartilhamento;
     }
 
+    public Usuario getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(Usuario owner) {
+        this.owner = owner;
+    }
+
     @Override
     public Directory getParent() {
         return this.parent;
@@ -101,6 +110,14 @@ public class Archive implements Content {
     public void compartilhar(Usuario user, String tipo, String username) {
         this.compartilhamento.addCompartilhamento(user, tipo);
         user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName());
+    }
+
+    public void sairCompartilhamento(Usuario user) {
+        this.compartilhamento.sairCompartilhamento(user);
+    }
+
+    public void cancelarCompartilhamento(String path) {
+        this.compartilhamento.limparCompartilhamento(path);
     }
 
 
