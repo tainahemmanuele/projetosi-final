@@ -3,7 +3,7 @@
     position:relative;
 }
 
-/* MOSTRA A BUTTON COMO UM CÍRCULO (OPCIONAL) */
+/* Mostra botão como uma elipse com o nome notificacoes*/
 #notification_button {
     background-color:#000000;
     -moz-border-radius:36px;
@@ -54,7 +54,7 @@
     -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
     z-index: 0;
 }
-/* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+
 #notifications:before {
     content: '';
     display:none;

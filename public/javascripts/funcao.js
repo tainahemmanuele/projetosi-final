@@ -4,7 +4,7 @@
 $(document).ready(function () {
     $('#notification_counter')
         .css({ opacity: 0 })
-        .text('!')              // Aqui você adiciona a quantidade de novas notificações(o que vem do server, por exemplo.).
+        .text('!')              //Alerta de notificação
         .css({ top: '-10px' })
         .animate({ top: '-2px', opacity: 1 }, 500);
 
@@ -14,10 +14,10 @@ $(document).ready(function () {
             if ($('#notifications').is(':hidden')) {
                 $('#notification_button').css('background-color', '#2E467C');
             }
-            else $('#notification_button').css('background-color', '#FFF');        // Muda a cor do background.
+            else $('#notification_button').css('background-color', '#FFF');
         });
 
-        $('#notification_counter').fadeOut('slow');                 // Apaga o numero de novas notificações.
+        $('#notification_counter').fadeOut('slow');                 // Apaga alerta de notificacao
 
         return false;
     });
@@ -26,13 +26,13 @@ $(document).ready(function () {
     $(document).click(function () {
         $('#notifications').hide();
 
-        // Verifica se o número de novas notificações está escondido. Apenas pra mudar a cor do button.
+        // Verifica se o número de novas notificações está escondido. Apenas pra mudar a cor do button.O botão fica roxo
         if ($('#notification_counter').is(':hidden')) {
             $('#notification_button').css('background-color', '#2E467C');
         }
     });
 
     $('#notifications').click(function () {
-        return false;       // Não faz nada quando clica no container. Pode ser adicionado suas funções de click em um notificação.
+        return false;
     });
 });
