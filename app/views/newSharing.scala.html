@@ -1,0 +1,25 @@
+@(archive: IArchive)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Novo Compartilhamento</title>
+  </head>
+  <body>
+    <h2>Compartilhar: @archive.getName</h2>
+    <form method="POST" action="@routes.LoggedUserController.compartilharArquivo(archive.getPath)">
+      <div>
+        <label style="font-family: Calibri">Email do Usuario:</label>
+        <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
+        <select name="tipo">
+          <option value="Leitura"> Leitura </option>
+          <option value="Edicao"> Edicao </option>
+        </select>
+      </div>
+      <button type="submit" style="font-family: Calibri">Compartilhar</button>
+      <input type="button" value="Cancelar" onClick="location.href='@routes.LoggedUserController.verArquivo(archive.getPath)'">
+    </form>
+
+  </body>
+</html>

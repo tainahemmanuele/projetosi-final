@@ -14,6 +14,10 @@ import java.util.NoSuchElementException;
  * Created by Tainah Emmanuele on 24/07/2016.
  */
 public class Usuario {
+
+    public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
+    public static String SHARING_FOLDER_NAME = "Compartilhados";
+
     private String username;
     private String email;
     private String senha;
@@ -22,8 +26,10 @@ public class Usuario {
     private ArrayList<String> notificacoes;
 
     public Usuario() throws EmptyStringException {
-        this.folder = new Directory("Pasta Pessoal");
-        this.compartilhados = new Directory("Itens Compartilhados");
+        this.folder = new Directory(DEFAULT_FOLDER_NAME);
+        this.compartilhados = new Directory(SHARING_FOLDER_NAME);
+        this.notificacoes = new ArrayList<String>();
+        this.notificacoes.add("Bem vindo ao TextDropBox");
         try {
             this.folder.addContent(compartilhados);
         } catch (AlreadyExistingContentException e){
@@ -52,8 +58,10 @@ public class Usuario {
         this.username = username;
         this.email = email;
         this.senha = senha;
-        this.folder = new Directory("Pasta Pessoal");
-        this.compartilhados = new Directory("Itens Compartilhados");
+        this.folder = new Directory(DEFAULT_FOLDER_NAME);
+        this.compartilhados = new Directory(SHARING_FOLDER_NAME);
+        this.notificacoes = new ArrayList<String>();
+        this.notificacoes.add("Bem vindo ao TextDropBox");
         try {
             this.folder.addContent(compartilhados);
         } catch (AlreadyExistingContentException e){
@@ -62,7 +70,7 @@ public class Usuario {
     }
 
     //GETTERS AND SETTERS
-    public List<Archive> getArchives() {
+    public List<IArchive> getArchives() {
         return this.folder.getListArchive();
     }
 
@@ -126,10 +134,26 @@ public class Usuario {
 
     public void compartilhar(Usuario user, String tipo, String path) throws AlreadyExistingContentException {
         Content arquivo = getContent(path);
-        if (!arquivo.isDirectory() && this.compartilhados.hasArchive((Archive) arquivo)) {
-            ((Archive) arquivo).compartilhar(user, tipo, this.getUsername());
-            user.getCompartilhados().addContent(arquivo);
+        if (!(arquivo.isDirectory()) && !(user.getCompartilhados().hasArchive((IArchive) arquivo))) {
+            ((IArchive) arquivo).compartilhar(user, tipo, this.getUsername());
+            ArchiveLink linkArchive = new ArchiveLink((IArchive)arquivo);
+            user.getCompartilhados().addContent(linkArchive);
         }
+    }
+
+    public void sairCompartilhamento(String path) {
+        Content arquivo = getContent(path);
+        if (!arquivo.isDirectory() && (this.compartilhados.hasArchive((IArchive) arquivo))) {
+            this.getCompartilhados().delContent(arquivo);
+            ((IArchive) arquivo).sairCompartilhamento(this);
+        }
+    }
+
+    // Metodo para o dono do arquivo cancelar o compartilhamento.
+    public void cancelarCompartilhamento(String path) {
+        IArchive archive = (IArchive) getContent(path);
+        String sharingPath = DEFAULT_FOLDER_NAME + "/" + SHARING_FOLDER_NAME + "/" + archive.getNameType();
+        archive.cancelarCompartilhamento(sharingPath);
     }
 
 

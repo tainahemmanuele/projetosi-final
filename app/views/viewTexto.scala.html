@@ -1,4 +1,4 @@
-@(archive: Archive)
+@(archive: IArchive)(user: Usuario)
 
 <!DOCTYPE html>
 
@@ -13,8 +13,19 @@
     <h2>@archive.getNameType</h2>
     <textarea disabled rows="20" cols="90">@archive.getText</textarea>
     <form>
-      <button formmethod="get" formaction="@routes.LoggedUserController.editarArquivoRender(archive.getPath)" type="submit">Editar</button>
-      <button formmethod="get" formaction="@routes.LoggedUserController.excluirArquivo(archive.getPath)" type="submit">Excluir</button>
+      @if(archive.getOwner().equals(user) || archive.getCompartilhamento().getCompartilhadoEdicao().contains(user)) {
+        <button formmethod="get" formaction="@routes.LoggedUserController.editarArquivoRender(archive.getPath)" type="submit">Editar</button>
+      }
+      @if(archive.getOwner().equals(user)) {
+        <button formmethod="get" formaction="@routes.LoggedUserController.compartilharRender(archive.getPath)" type="submit">Compartilhar</button>
+        <button formmethod="get" formaction="@routes.LoggedUserController.excluirArquivo(archive.getPath)" type="submit">Excluir</button>
+      }
+      @if(archive.getOwner().equals(user) && archive.isShared) {
+        <button formmethod="get" formaction="@routes.LoggedUserController.removeCompRender(archive.getPath)" type="submit">Remover Compartilhamento</button>
+      }
+      @if(archive.isShared) {
+        <button formmethod="get" formaction="@routes.LoggedUserController.cancelarCompartilhamento(archive.getPath)" type="submit">Cancelar Compartilhamento</button>
+      }
     </form>
     <p></p>
     <form>

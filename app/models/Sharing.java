@@ -47,18 +47,28 @@ public class Sharing {
     public void addCompartilhamento(Usuario user, String tipo) {
         if (tipo.equals("Leitura") && !canOnlyRead(user) && !canEdit(user)) {
             this.compartilhadoLeitura.add(user);
-        } else if (tipo.equals("Editar") && !canEdit(user)) {
+        } else if (tipo.equals("Edicao") && !canEdit(user)) {
             this.compartilhadoEdicao.add(user);
         }
     }
 
-    public void cancelarCompartilhamento(Usuario user) {
+    public void sairCompartilhamento(Usuario user) {
         if (this.compartilhadoLeitura.contains(user)) {
             this.compartilhadoLeitura.remove(user);
         } else if (this.compartilhadoEdicao.contains(user)) {
             this.compartilhadoEdicao.remove(user);
         }
+    }
 
+    public void limparCompartilhamento(String path) {
+        for (Usuario user : this.compartilhadoLeitura) {
+            user.getCompartilhados().delContent(user.getContent(path));
+        }
+        for (Usuario user : this.compartilhadoEdicao) {
+            user.getCompartilhados().delContent(user.getContent(path));
+        }
+        this.compartilhadoEdicao = new ArrayList<Usuario>();
+        this.compartilhadoLeitura = new ArrayList<Usuario>();
     }
 
 }

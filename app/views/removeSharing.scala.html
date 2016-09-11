@@ -1,0 +1,21 @@
+@(archive: IArchive)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Remover Compartilhamento</title>
+    </head>
+    <body>
+    <h2>Remover Compartilhamento</h2>
+    <form method="POST" action="@routes.LoggedUserController.removeUsuarioCompartilhado(archive.getPath)">
+        <div>
+            <label style="font-family: Calibri">Email do Usuario:</label>
+            <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
+        </div>
+        <button type="submit" style="font-family: Calibri">Remover</button>
+        <input type="button" value="Cancelar" onClick="location.href='@routes.LoggedUserController.verArquivo(archive.getPath)'">
+    </form>
+
+    </body>
+</html>

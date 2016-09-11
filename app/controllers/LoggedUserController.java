@@ -2,17 +2,16 @@ package controllers;
 
 import exceptions.AlreadyExistingContentException;
 import exceptions.InputException;
-import models.Archive;
-import models.Content;
-import models.Directory;
-import models.Usuario;
+import models.*;
 import play.data.FormFactory;
 import play.mvc.*;
+import util.FormularioCompartilhamento;
 import util.FormularioConteudo;
 import util.FormularioEdicaoConta;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by SauloSamuel on 29/07/2016.
@@ -78,8 +77,9 @@ public class LoggedUserController extends Controller {
         Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
         FormularioConteudo formularioConteudo = formFactory.form(FormularioConteudo.class).bindFromRequest().get();
         try {
-            Archive arquivo = new Archive(formularioConteudo.getName(), formularioConteudo.getType());
+            IArchive arquivo = new Archive(formularioConteudo.getName(), formularioConteudo.getType());
             directory.addContent(arquivo);
+            arquivo.setOwner(loggedUser);
         } catch (Exception e) {
             flash("erroNew", e.getMessage());
         }
@@ -106,42 +106,84 @@ public class LoggedUserController extends Controller {
 
     public Result editarArquivoRender(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Archive archive = (Archive) loggedUser.getContent(path);
+        IArchive archive = (IArchive) loggedUser.getContent(path);
         return ok(editarTexto.render(archive));
     }
 
     public Result editarArquivoTexto(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Archive novoArquivo = formFactory.form(Archive.class).bindFromRequest().get();
-        Archive archive = (Archive) loggedUser.getContent(path);
+        IArchive novoArquivo = formFactory.form(Archive.class).bindFromRequest().get();
+        IArchive archive = (IArchive) loggedUser.getContent(path);
         archive.setTexto(novoArquivo.getText());
         archive.setName(novoArquivo.getName());
-        return ok(viewTexto.render(archive));
+        return ok(viewTexto.render(archive, loggedUser));
     }
 
     public Result verArquivo(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Archive archive = (Archive) loggedUser.getContent(path);
-        return ok(viewTexto.render(archive));
+        IArchive archive = (IArchive) loggedUser.getContent(path);
+        return ok(viewTexto.render(archive, loggedUser));
     }
 
     public Result excluirArquivo(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Archive archive = (Archive) loggedUser.getContent(path);
+        IArchive archive = (IArchive) loggedUser.getContent(path);
         Directory folder = archive.getParent();
+        if (archive.isShared()) {
+            loggedUser.cancelarCompartilhamento(path);
+        }
         folder.delContent(archive);
         return redirect(routes.LoggedUserController.openDirectory(folder.getPath()));
     }
 
-    public Result compartilharArquivo(String emailUser, String path, String tipo) {
+    public Result compartilharRender(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Usuario sharingUser = Application.getUsuarioEmail(emailUser);
-        try {
-            loggedUser.compartilhar(sharingUser, tipo, path);
-        } catch (AlreadyExistingContentException e) {
-            flash("repeticao","Ja existe um arquivo com esse nome sendo compartilhado.");
+        IArchive archive = (IArchive) loggedUser.getContent(path);
+        return ok(newSharing.render(archive));
+    }
+
+    public Result compartilharArquivo(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        IArchive archive = (IArchive) loggedUser.getContent(path);
+        FormularioCompartilhamento formularioComp = formFactory.form(FormularioCompartilhamento.class).bindFromRequest().get();
+        if (Application.getUsuarioEmail(formularioComp.getEmailUser()) != null) {
+            Usuario sharingUser = Application.getUsuarioEmail(formularioComp.getEmailUser());
+            try {
+                loggedUser.compartilhar(sharingUser, formularioComp.getTipo(), path);
+            } catch (AlreadyExistingContentException e) {
+                flash("repeticao","Ja existe um arquivo com esse nome sendo compartilhado.");
+            }
         }
-        return ok();
+        return verArquivo(path);
+    }
+
+    public Result cancelarCompartilhamento(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        IArchive archive = (IArchive) loggedUser.getContent(path);
+        if (archive.getOwner().equals(loggedUser)) {
+            loggedUser.cancelarCompartilhamento(path);
+        } else {
+            loggedUser.sairCompartilhamento(path);
+        }
+        return redirect(routes.LoggedUserController.openDirectory(archive.getParent().getPath()));
+    }
+
+    public Result removeCompRender(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        IArchive archive = (IArchive) loggedUser.getContent(path);
+        return ok(removeSharing.render(archive));
+    }
+
+    public Result removeUsuarioCompartilhado(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        FormularioCompartilhamento formularioComp = formFactory.form(FormularioCompartilhamento.class).bindFromRequest().get();
+        if (Application.getUsuarioEmail(formularioComp.getEmailUser()) != null) {
+            Usuario sharingUser = Application.getUsuarioEmail(formularioComp.getEmailUser());
+            IArchive archive = (IArchive) loggedUser.getContent(path);
+            String sharingPath = sharingUser.DEFAULT_FOLDER_NAME + "/" + sharingUser.SHARING_FOLDER_NAME + "/" + archive.getNameType();
+            sharingUser.sairCompartilhamento(sharingPath);
+        }
+        return verArquivo(path);
     }
 
 }
