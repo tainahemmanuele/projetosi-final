@@ -1,29 +1,83 @@
-@(usuario :Usuario)
+@(usuario: Usuario)
 
 @main("Editar") {
-    <h2>Editar Conta</h2>
 
-    <form method="POST" action="@routes.LoggedUserController.editarConta()">
-        <div>
-            <label style="font-family: Calibri">Username:</label>
-            <input type="text" name="username" value="@usuario.getUsername()"/> <br>
+
+    <html lang="pt-br">
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+            <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+            <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+
+        </head>
+
+        <style type="text/css">
+        .Absolute-Center.is-Responsive {
+            width: 50%;
+            min-width: 600px;
+            max-width: 700px;
+            padding: 10px;
+        }
+
+        .Absolute-Center {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        </style>
+
+        <div class="container">
+            <div class="row">
+                <div class="Absolute-Center is-Responsive">
+                    <h2 class="text-center" >Editar Conta</h2>
+                    <form method="POST" class="form-horizontal" action="@routes.LoggedUserController.editarConta()">
+                        <div class="form-group">
+                            <label style="font-family: Calibri" class="control-label col-sm-3" >Username:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="username" class="form-control" value="@usuario.getUsername()"/> <br>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Calibri" class="control-label col-sm-3" >Email:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="email" class="form-control" value="@usuario.getEmail()"/> <br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Calibri" class="control-label col-sm-3" >Senha atual:</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" name="senhaAtual"/> <br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Calibri" class="control-label col-sm-3" >Nova Senha:</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" name="senhaNova1"/> <br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: Calibri" class="control-label col-sm-3" >Confirmar Nova Senha:</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" name="senhaNova2"/> <br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-primary btn-md" >Editar</button>
+                                <input type="button" class="btn btn-primary btn-md" value="Voltar" onClick="history.go(-1)">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div>
-            <label style="font-family: Calibri">Email:</label>
-            <input type="text" name="email" value="@usuario.getEmail()"/> <br>
-        </div>
-        <div>
-            <label style="font-family: Calibri">Senha atual:</label>
-            <input type="password" name="senhaAtual"/> <br>
-        </div>
-        <div>
-            <label style="font-family: Calibri">Nova Senha:</label>
-            <input type="password" name="senhaNova1"/> <br>
-        </div>
-        <div>
-            <label style="font-family: Calibri">Confirmar Nova Senha:</label>
-            <input type="password" name="senhaNova2"/> <br>
-        </div>
-        <button type="submit">Editar</button>
-    </form>
 }

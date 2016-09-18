@@ -11,13 +11,13 @@ import util.Verificador;
 import views.html.*;
 import models.Usuario;
 import play.data.FormFactory;
+
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import play.data.Form;
-
 
 
 /**
@@ -29,23 +29,23 @@ public class CadastroController extends Controller {
 
     private Verificador verificador;
 
-    public Result cadastraUsuario()  {
+    public Result cadastraUsuario() {
 
-        try{
+        try {
             FormularioCadastro formCadastro = formFactory.form(FormularioCadastro.class).bindFromRequest().get();
-            Usuario usuario = new Usuario(formCadastro.getUsername(),formCadastro.getEmail(),formCadastro.getSenha());
+            Usuario usuario = new Usuario(formCadastro.getUsername(), formCadastro.getEmail(), formCadastro.getSenha());
 
             try {
 
                 Application.buscaUsuario(usuario);
                 Application.adicionaUsuario(usuario);
                 return ok(mensagem.render(""));
-            } catch (UsuarioException e){
+            } catch (UsuarioException e) {
                 flash("cadastro", e.getMessage());
                 return ok(cadastro.render());
             }
 
-        }catch( InputException e){
+        } catch (InputException e) {
             flash("cadastro", e.getMessage());
             return ok(cadastro.render());
 
@@ -57,13 +57,9 @@ public class CadastroController extends Controller {
     }
 
 
-
-
-
     public Result index() {
         return ok(cadastro.render());
     }
-
 
 
 }
