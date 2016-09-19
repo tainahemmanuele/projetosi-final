@@ -2,20 +2,32 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="pt-br">
     <head>
-        <title>Remover Compartilhamento</title>
-    </head>
-    <body>
-    <h2>Remover Compartilhamento</h2>
-    <form method="POST" action="@routes.LoggedUserController.removeUsuarioCompartilhado(archive.getPath)">
-        <div>
-            <label style="font-family: Calibri">Email do Usuario:</label>
-            <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
-        </div>
-        <button type="submit" style="font-family: Calibri">Remover</button>
-        <input type="button" value="Cancelar" onClick="location.href='@routes.LoggedUserController.verArquivo(archive.getPath)'">
-    </form>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </body>
-</html>
+
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+
+    </head>
+    <html>
+        <head>
+            <title>Remover Compartilhamento</title>
+        </head>
+        <body>
+            <h2>Remover Compartilhamento</h2>
+            <form method="POST" action="@routes.LoggedUserController.removeUsuarioCompartilhado(archive.getPath)">
+                <div>
+                    <label style="font-family: Calibri">Email do Usuario:</label>
+                    <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
+                </div>
+                <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Remover</button>
+                <input type="button" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
+            </form>
+
+        </body>
+    </html>

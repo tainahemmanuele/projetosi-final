@@ -1,7 +1,11 @@
 @main("Cadastro") {
 
     @if(flash.containsKey("cadastro")) {
-        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("cadastro")</p>
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>@flash().get("cadastro")</strong>
+        </div>
+
     }
 
     <html lang="pt-br">

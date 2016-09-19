@@ -1,53 +1,88 @@
-@(username :String, notificacoes:List[String])(content: Html)
-@main(username) {
-    <h2>Bem-vindo @username!</h2>
+@(username: String, notificacoes: List[String])(content: Html)
+    @main(username) {
 
-    <html>
-        <head>
-            <title>Exemplo notification</title>
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-            <link rel="stylesheet"  href="@routes.Assets.at("stylesheets/estilo.css")" type="text/css"  />
-            <script src="@routes.Assets.at("javascripts/funcao.js")" type="text/javascript" defer="defer" ></script>
-        </head>
-        <body>
-            <body style="margin:0;padding:0;">
-                <div>
-
-                        <li id="notification_container">
-                            <div id="notification_counter"></div>   <!--Aqui mostra a quantidade de notificações.-->
+        <html lang="pt-br">
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-                            <!--Botão em forma de elipse-->
-                            <div id="notification_button">Notificações</div>
+                <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
 
-                            <!--Caixa de notificacoes-->
-                            <div id="notifications">
-                                @for(notificacao <- notificacoes.reverse) {
-                                   <p>@notificacao</p>
-                                }
+            </head>
 
-                                <div style="height: 300px;"></div>
-                                <div class="seeAll"><a href="#">Ver todos</a></div>
+            <style type="text/css">
+            .Absolute-Center.is-Responsive {
+                width: 50%;
+                min-width: 200px;
+                max-width: 400px;
+                padding: 10px;
+            }
+
+            .Absolute-Center {
+                margin: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+            </style>
+
+            <div class="Absolute-Center is-Responsive">
+                <h2>Bem-vindo @username!</h2>
+
+                <html>
+                    <head>
+                        <title>Exemplo notification</title>
+                        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/estilo.css")" type="text/css" />
+                        <script src="@routes.Assets.at("javascripts/funcao.js")" type="text/javascript" defer="defer" ></script>
+                    </head>
+                    <body>
+                        <body style="margin: 0;
+                            padding: 0;">
+                            <div>
+
+                                <li id="notification_container">
+                                    <div id="notification_counter"></div>   <!--Aqui mostra a quantidade de notificações.-->
+
+
+                                    <!--Botão em forma de elipse-->
+                                    <div id="notification_button">Notificações</div>
+
+                                        <!--Caixa de notificacoes-->
+                                    <div id="notifications">
+                                        @for(notificacao <- notificacoes.reverse) {
+                                            <p>@notificacao</p>
+                                        }
+
+                                        <div style="height: 300px;"></div>
+                                        <div class="seeAll"><a href="#">Ver todos</a></div>
+                                    </div>
+                                </li>
+
                             </div>
-                        </li>
+                        </body>
 
-                </div>
-            </body>
+                    </body>
+                </html>
 
-        </body>
-    </html>
+                @content
 
-    @content
+                <p></p>
 
-    <p></p>
+                <form>
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.editarRender()" type="submit">
+                        Editar Conta
+                    </button>
 
-    <form>
-        <button formmethod="get" formaction="@routes.LoggedUserController.editarRender()" type="submit">
-            Editar Conta
-        </button>
-
-        <button formmethod="get" formaction="@routes.LoggedUserController.logout()" type="submit">
-            Sair
-        </button>
-    </form>
-}
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.logout()" type="submit">
+                        Sair
+                    </button>
+                </form>
+        </div>
+    }

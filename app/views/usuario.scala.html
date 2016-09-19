@@ -1,45 +1,58 @@
 @(user: Usuario)
 
-@home(user.getUsername, user.getNotificacoes){
-    @if(flash().containsKey("erroEdit")) {
-        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroEdit")</p>
-    }
+    @home(user.getUsername, user.getNotificacoes) {
+        <html lang="pt-br">
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <h3>@user.getContent(session().get("dir")).getPath</h3>
 
-    @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).isEmpty() ) {
-        <p> Pasta Vazia </p>
-    } else {
-        <ul style="border: #000000">
-            @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
-                <li><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getNameType <br /> </a></li>
+                <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+
+            </head>
+            @if(flash().containsKey("erroEdit")) {
+                <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroEdit")</p>
             }
-            @for(dir <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListDirectory()) {
-                <li><a href="@routes.LoggedUserController.openDirectory(dir.getPath)">
-                    <img src="@routes.Assets.at("images/folder.png")" height="16" width="16" /> @dir.getName <br /> </a></li>
+
+            <h3>@user.getContent(session().get("dir")).getPath</h3>
+
+            @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).isEmpty()) {
+                <p> Pasta Vazia </p>
+            } else {
+                <ul style="border: #000000">
+                    @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
+                        <li><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getNameType <br /> </a></li>
+                    }
+                    @for(dir <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListDirectory()) {
+                        <li><a href="@routes.LoggedUserController.openDirectory(dir.getPath)">
+                            <img src="@routes.Assets.at("images/folder.png")" height="16" width="16" /> @dir.getName <br /> </a>
+                        </li>
+                    }
+                </ul>
             }
-        </ul>
+
+            @if(flash().containsKey("erroNew")) {
+                <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroNew")</p>
+            }
+
+            <form>
+                @if(user.getContent(session().get("dir")).getParent() != null) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.openDirectory(user.getContent(session().get("dir")).getParent().getPath)" type="submit">
+                        Voltar
+                    </button>
+                }
+
+                @if(!(user.getContent(session().get("dir")).equals(user.getCompartilhados))) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
+                        Novo Arquivo
+                    </button>
+
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.newDirRender()" type="submit">
+                        Novo Diretorio
+                    </button>
+                }
+            </form>
     }
-
-    @if(flash().containsKey("erroNew")) {
-        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("erroNew")</p>
-    }
-
-    <form>
-        @if(user.getContent(session().get("dir")).getParent() != null) {
-            <button formmethod="get" formaction="@routes.LoggedUserController.openDirectory(user.getContent(session().get("dir")).getParent().getPath)" type="submit">
-                Voltar
-            </button>
-        }
-
-        @if(!(user.getContent(session().get("dir")).equals(user.getCompartilhados))) {
-            <button formmethod="get" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
-                Novo Arquivo
-            </button>
-
-            <button formmethod="get" formaction="@routes.LoggedUserController.newDirRender()" type="submit">
-                Novo Diretorio
-            </button>
-        }
-    </form>
-}

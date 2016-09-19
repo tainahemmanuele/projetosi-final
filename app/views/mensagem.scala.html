@@ -1,14 +1,48 @@
-@(title:String)
+@(title: String)
 
 <!DOCTYPE html>
 
-<html>
+<html lang="pt-br">
     <head>
-        <title>@title</title>
-        <h5 style="font-family: Calibri"> Cadastro Feito com Sucesso!</h5>
-        @if(flash.containsKey("sucesso")){
-            <h5 style="font-family: Calibri"> @flash.get("sucesso")</h5>
-        }
-        <form method="get" action="@routes.Application.loginRender()"><button type="submit">Login</button></form>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+
     </head>
-</html>
+    <style type="text/css">
+    .Absolute-Center.is-Responsive {
+        width: 50%;
+        min-width: 200px;
+        max-width: 400px;
+        padding: 10px;
+    }
+
+    .Absolute-Center {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    </style>
+
+
+    <html>
+        <div class="Absolute-Center is-Responsive">
+            <head>
+                <title>@title</title>
+                <h5 style="font-family: Calibri"> Cadastro Feito com Sucesso!</h5>
+                @if(flash.containsKey("sucesso")) {
+                    <h5 style="font-family: Calibri"> @flash.get("sucesso")</h5>
+                }
+                <form method="get" action="@routes.Application.loginRender()">
+                    <button type="submit" class="btn btn-primary btn-md" >Login</button></form>
+            </head>
+        </div>
+    </html>

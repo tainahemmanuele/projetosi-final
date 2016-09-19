@@ -2,24 +2,36 @@
 
 <!DOCTYPE html>
 
-<html>
-  <head>
-    <title>Novo Compartilhamento</title>
-  </head>
-  <body>
-    <h2>Compartilhar: @archive.getName</h2>
-    <form method="POST" action="@routes.LoggedUserController.compartilharArquivo(archive.getPath)">
-      <div>
-        <label style="font-family: Calibri">Email do Usuario:</label>
-        <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
-        <select name="tipo">
-          <option value="Leitura"> Leitura </option>
-          <option value="Edicao"> Edicao </option>
-        </select>
-      </div>
-      <button type="submit" style="font-family: Calibri">Compartilhar</button>
-      <input type="button" value="Cancelar" onClick="location.href='@routes.LoggedUserController.verArquivo(archive.getPath)'">
-    </form>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  </body>
-</html>
+
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+
+    </head>
+    <html>
+        <head>
+            <title>Novo Compartilhamento</title>
+        </head>
+        <body>
+            <h2>Compartilhar: @archive.getName</h2>
+            <form method="POST" action="@routes.LoggedUserController.compartilharArquivo(archive.getPath)">
+                <div>
+                    <label style="font-family: Calibri">Email do Usuario:</label>
+                    <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
+                    <select name="tipo">
+                        <option value="Leitura"> Leitura </option>
+                        <option value="Edicao"> Edicao </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Compartilhar</button>
+                <input type="button" class="btn btn-primary btn-md" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
+            </form>
+
+        </body>
+    </html>
