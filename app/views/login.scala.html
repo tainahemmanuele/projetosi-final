@@ -1,11 +1,18 @@
 @main("Login") {
 
     @if(flash.containsKey("login")) {
-        <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("login")</p>
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>@flash().get("login")</strong>
+        </div>
     }
 
     @if(flash.containsKey("erro")) {
-        <p style="color: rgba(255, 0, 0, 0.5)">@flash().get("erro")</p>
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>@flash().get("erro")</strong>
+        </div>
+
     }
 
 
@@ -27,7 +34,7 @@
             width: 50%;
             min-width: 200px;
             max-width: 400px;
-            padding: 10px;
+            padding: 30px;
         }
 
         .Absolute-Center {
