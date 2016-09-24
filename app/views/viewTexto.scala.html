@@ -2,48 +2,74 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")" type="text/css" >
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
 
-  </head>
-<html>
-  <head>
-    <title>@archive.getName</title>
-  </head>
-  <body>
-    @if(flash.containsKey("repeticao")) {
-      <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("repeticao")</p>
+    </head>
+    <style type="text/css">
+    .Absolute-Center.is-Responsive {
+        width: 50%;
+        min-width: 300px;
+        max-width: 600px;
+        padding: 30px;
     }
-    <h2>@archive.getNameType</h2>
-    <textarea disabled rows="20" cols="90">@archive.getText</textarea>
-    <form>
-      @if(archive.getOwner().equals(user) || archive.getCompartilhamento().getCompartilhadoEdicao().contains(user)) {
-        <button formmethod="get"  class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.editarArquivoRender(archive.getPath)" type="submit">Editar</button>
-      }
-      @if(archive.getOwner().equals(user)) {
-        <button formmethod="get"  class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.compartilharRender(archive.getPath)" type="submit">Compartilhar</button>
-        <button formmethod="get"  class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.excluirArquivo(archive.getPath)" type="submit">Excluir</button>
-      }
-      @if(archive.getOwner().equals(user) && archive.isShared) {
-        <button formmethod="get"  class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.removeCompRender(archive.getPath)" type="submit">Remover Compartilhamento</button>
-      }
-      @if(archive.isShared) {
-        <button formmethod="get" class="btn btn-primary btn-md"   formaction="@routes.LoggedUserController.cancelarCompartilhamento(archive.getPath)" type="submit">Cancelar Compartilhamento</button>
-      }
-    </form>
-    <p></p>
-    <form>
-      <button formmethod="get"  class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.openDirectory(session().get("dir"))" type="submit">
-      Voltar
-      </button>
-    </form>
 
-  </body>
-</html>
+    .Absolute-Center {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    </style>
+
+    <div class="Absolute-Center is-Responsive">
+        <html>
+            <head>
+                <title>@archive.getName</title>
+            </head>
+            <body>
+                @if(flash.containsKey("repeticao")) {
+                    <p style="color: rgba(255, 0, 0, 0.79)">@flash().get("repeticao")</p>
+                }
+            <h2>@archive.getNameType</h2>
+            <textarea disabled rows="20" cols="90">@archive.getText</textarea>
+            <form>
+                @if(archive.getOwner().equals(user) || archive.getCompartilhamento().getCompartilhadoEdicao().contains(user)) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.editarArquivoRender(archive.getPath)" type="submit">
+                        Editar</button>
+                }
+                @if(archive.getOwner().equals(user)) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.compartilharRender(archive.getPath)" type="submit">
+                        Compartilhar</button>
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.excluirArquivo(archive.getPath)" type="submit">
+                        Excluir</button>
+                }
+                @if(archive.getOwner().equals(user) && archive.isShared) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.removeCompRender(archive.getPath)" type="submit">
+                        Remover Compartilhamento</button>
+                }
+                @if(archive.isShared) {
+                    <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.cancelarCompartilhamento(archive.getPath)" type="submit">
+                        Cancelar Compartilhamento</button>
+                }
+            <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.openDirectory(session().get("dir"))" type="submit">
+      Voltar
+            </button>
+            </form>
+                <p></p>
+            <form>
+
+            </form>
+
+            </body>
+        </html>
+    </div>

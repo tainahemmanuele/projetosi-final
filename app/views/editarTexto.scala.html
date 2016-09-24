@@ -12,27 +12,49 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
 
-    </head>
-    <html>
-        <head>
-            <title>@archive.getName()</title>
-        </head>
 
-        <body>
-            <form method="POST" action="@routes.LoggedUserController.editarArquivoTexto(archive.getPath)">
-                <div>
-                    <label for="name" style="font-family: Calibri">Nome do Arquivo:</label>
-                    <input type="text" name="name" id="name" value="@archive.getName" > <br>
-                </div>
-                <p></p>
-                <div>
-                    <label for="texto" style="font-family: Calibri">Conteudo:</label>
-                </div>
-                <div>
-                    <textarea name="texto" id="texto" rows="20" cols="90">@archive.getText</textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Salvar</button>
-                <input type="button" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
-            </form>
-        </body>
-    </html>
+    </head>
+
+    <style type="text/css">
+    .Absolute-Center.is-Responsive {
+        width: 50%;
+        min-width: 300px;
+        max-width: 600px;
+        padding: 30px;
+    }
+
+    .Absolute-Center {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    </style>
+
+    <div class="Absolute-Center is-Responsive">
+        <html>
+            <head>
+                <title>@archive.getName()</title>
+            </head>
+
+            <body>
+                <form method="POST" action="@routes.LoggedUserController.editarArquivoTexto(archive.getPath)">
+                    <div>
+                        <label for="name" style="font-family: Calibri">Nome do Arquivo:</label>
+                        <input type="text" name="name" id="name" value="@archive.getName" > <br>
+                    </div>
+                    <p></p>
+                    <div>
+                        <label for="texto" style="font-family: Calibri">Conteudo:</label>
+                    </div>
+                    <div>
+                        <textarea name="texto" id="texto" rows="20" cols="90">@archive.getText</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Salvar</button>
+                    <input type="button" class="btn btn-primary btn-md" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
+                </form>
+            </body>
+        </html>
+    </div>

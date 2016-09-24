@@ -14,6 +14,25 @@
             <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
 
         </head>
+        <style type="text/css">
+        .Absolute-Center.is-Responsive {
+            width: 50%;
+            min-width: 200px;
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        .Absolute-Center {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        </style>
+
+        <div class="Absolute-Center is-Responsive">
         <h2 style="font-family: Calibri">Criar novo diretorio</h2>
 
         <p>Criando novo diretorio em @path</p>
@@ -25,4 +44,5 @@
             </div>
             <button type="submit" class="btn btn-primary btn-md"  style="font-family: Calibri">Criar</button>
         </form>
+    </div>
 }

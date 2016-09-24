@@ -1,21 +1,40 @@
-@(directory : Directory)
+@(directory: Directory)
 
 <!DOCTYPE html>
+<style type="text/css">
+.Absolute-Center.is-Responsive {
+    width: 50%;
+    min-width: 300px;
+    max-width: 600px;
+    padding: 30px;
+}
 
-<html>
-  <head>
-    <title>@directory.getName</title>
-  </head>
-  <body>
-    <h2 style="font-family: Calibri">@directory.getName</h2>
+.Absolute-Center {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+</style>
 
-    @for(archive <- directory.getListArchive){
-      <p><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getName <br /> </a></p>
-    }
+<div class="Absolute-Center is-Responsive">
+    <html>
+        <head>
+            <title>@directory.getName</title>
+        </head>
+        <body>
+            <h2 style="font-family: Calibri">@directory.getName</h2>
 
-    @for(directory <- directory.getListDirectory){
-      <a href="listarPastas.scala.html"> @directory.getName <br /> </a>
-    }
+            @for(archive <- directory.getListArchive) {
+                <p><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getName <br /> </a></p>
+            }
 
-  </body>
-</html>
+            @for(directory <- directory.getListDirectory) {
+                <a href="listarPastas.scala.html"> @directory.getName <br /> </a>
+            }
+
+        </body>
+    </html>
+</div>

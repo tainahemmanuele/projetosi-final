@@ -14,24 +14,44 @@
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript" defer="defer" ></script>
 
     </head>
-    <html>
-        <head>
-            <title>Novo Compartilhamento</title>
-        </head>
-        <body>
-            <h2>Compartilhar: @archive.getName</h2>
-            <form method="POST" action="@routes.LoggedUserController.compartilharArquivo(archive.getPath)">
-                <div>
-                    <label style="font-family: Calibri">Email do Usuario:</label>
-                    <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
-                    <select name="tipo">
-                        <option value="Leitura"> Leitura </option>
-                        <option value="Edicao"> Edicao </option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Compartilhar</button>
-                <input type="button" class="btn btn-primary btn-md" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
-            </form>
+    <style type="text/css">
+    .Absolute-Center.is-Responsive {
+        width: 50%;
+        min-width: 200px;
+        max-width: 400px;
+        padding: 30px;
+    }
 
-        </body>
-    </html>
+    .Absolute-Center {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    </style>
+
+    <div class="Absolute-Center is-Responsive">
+        <html>
+            <head>
+                <title>Novo Compartilhamento</title>
+            </head>
+            <body>
+                <h2>Compartilhar: @archive.getName</h2>
+                <form method="POST" action="@routes.LoggedUserController.compartilharArquivo(archive.getPath)">
+                    <div>
+                        <label style="font-family: Calibri">Email do Usuario:</label>
+                        <input type="text" name="emailUser" placeholder="Email" style="font-family: Calibri"/>
+                        <select name="tipo">
+                            <option value="Leitura"> Leitura </option>
+                            <option value="Edicao"> Edicao </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-md" style="font-family: Calibri">Compartilhar</button>
+                    <input type="button" class="btn btn-primary btn-md" value="Cancelar" onClick="location.href = '@routes.LoggedUserController.verArquivo(archive.getPath)'">
+                </form>
+
+            </body>
+        </html>
+    </div>
