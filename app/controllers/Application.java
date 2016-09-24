@@ -44,10 +44,10 @@ public class Application extends Controller {
         Usuario user = null;
 
         if (!Verificador.verificaString(formLogin.getLogin())) {
-            flash("login", "Campo de Login nao pode ser vazio.");
+            flash("login", "Campo de Login não pode ser vazio.");
             return redirect(routes.Application.loginRender());
         } else if (!Verificador.verificaString(formLogin.getSenha())) {
-            flash("login", "Campo de senha nao pode ser vazio.");
+            flash("login", "Campo de senha não pode ser vazio.");
             return redirect(routes.Application.loginRender());
 
         } else if (Verificador.verificaEmail(formLogin.getLogin()))
