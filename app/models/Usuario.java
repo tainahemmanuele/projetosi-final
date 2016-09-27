@@ -20,16 +20,19 @@ public class Usuario {
 
     private String username;
     private String email;
-    private String senha;
+    private String password;
     private Directory folder;
     private Directory compartilhados;
-    private ArrayList<String> notificacoes;
+    private List<String> notificacoes;
+    private List<IArchive> depositingGarbage;
 
     public Usuario() throws EmptyStringException {
         this.folder = new Directory(DEFAULT_FOLDER_NAME);
         this.compartilhados = new Directory(SHARING_FOLDER_NAME);
         this.notificacoes = new ArrayList<String>();
         this.notificacoes.add("Bem vindo ao TextDropBox");
+        this.depositingGarbage = new ArrayList<IArchive>();
+
         try {
             this.folder.addContent(compartilhados);
         } catch (AlreadyExistingContentException e){
@@ -38,6 +41,25 @@ public class Usuario {
     }
 
     public Usuario(String username, String email, String senha) throws InputException {
+
+        verify(username, email, senha);
+
+        this.username = username;
+        this.email = email;
+        this.password = senha;
+        this.folder = new Directory(DEFAULT_FOLDER_NAME);
+        this.compartilhados = new Directory(SHARING_FOLDER_NAME);
+        this.notificacoes = new ArrayList<String>();
+        this.notificacoes.add("Bem vindo ao TextDropBox");
+        this.depositingGarbage = new ArrayList<IArchive>();
+        try {
+            this.folder.addContent(compartilhados);
+        } catch (AlreadyExistingContentException e){
+            throw new RuntimeException("Erro do sistema");
+        }
+    }
+
+    private void verify(String username, String email, String senha) throws InputException{
         if (!Verificador.verificaString(username) && !Verificador.verificaString(email) && !Verificador.verificaString(senha))
             throw new EmptyStringException();
         if(!Verificador.verificaString(username) && !Verificador.verificaString(email))
@@ -54,82 +76,6 @@ public class Usuario {
             throw new EmptyStringException("Email");
         if (!Verificador.verificaEmail(email))
             throw new InvalidEmailException();
-
-        this.username = username;
-        this.email = email;
-        this.senha = senha;
-        this.folder = new Directory(DEFAULT_FOLDER_NAME);
-        this.compartilhados = new Directory(SHARING_FOLDER_NAME);
-        this.notificacoes = new ArrayList<String>();
-        this.notificacoes.add("Bem vindo ao TextDropBox");
-        try {
-            this.folder.addContent(compartilhados);
-        } catch (AlreadyExistingContentException e){
-            throw new RuntimeException("Erro do sistema");
-        }
-    }
-
-    //GETTERS AND SETTERS
-    public List<IArchive> getArchives() {
-        return this.folder.getListArchive();
-    }
-
-    public List<Directory> getDirectory() {
-        return this.folder.getListDirectory();
-    }
-
-    public Directory getCompartilhados() {
-        return this.compartilhados;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) throws InputException {
-        if (!Verificador.verificaString(username))
-            throw new EmptyStringException("Username");
-
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) throws InputException {
-        if (!Verificador.verificaEmail(email))
-            throw new InvalidEmailException();
-
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) throws InputException {
-        if (!Verificador.verificaString(senha))
-            throw new EmptyStringException("Senha");
-
-        this.senha = senha;
-    }
-
-    public Content getContent(String path) {
-        String[] pathComponents = path.split("/");
-        Content content = this.folder;
-        for (int i = 1; i < pathComponents.length; i++) {
-            content = ((Directory) content).getContent(pathComponents[i]);
-        }
-        return content;
-    }
-
-    public Directory getFolder() {
-        return this.folder;
-    }
-
-    public void setFolderContent(Directory dir, Content conteudo) {
-        conteudo.setParent(dir);
     }
 
     public void compartilhar(Usuario user, String tipo, String path) throws AlreadyExistingContentException {
@@ -156,6 +102,81 @@ public class Usuario {
         archive.cancelarCompartilhamento(sharingPath);
     }
 
+    public void removeArchive(String path){
+        IArchive archive = (IArchive) getContent(path);
+        Directory parent = archive.getParent();
+        //Adiciona na lixeira
+        this.depositingGarbage.add(archive);
+        //Remove do Diretorio
+        parent.delContent(archive);
+    }
+
+    //GETTERS
+    public List<IArchive> getDepositingGarbage(){ return this.depositingGarbage; }
+
+    public List<IArchive> getArchives() { return this.folder.getListArchive(); }
+
+    public List<Directory> getDirectory() { return this.folder.getListDirectory(); }
+
+    public Directory getCompartilhados() {
+        return this.compartilhados;
+    }
+
+    public String getEmail() { return this.email; }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Directory getFolder() { return this.folder; }
+
+    public String getSenha() { return password; }
+
+    public List<String> getNotificacoes() {
+        return notificacoes;
+    }
+
+
+    public Content getContent(String path) {
+        String[] pathComponents = path.split("/");
+        Content content = this.folder;
+        for (int i = 1; i < pathComponents.length; i++) {
+            content = ((Directory) content).getContent(pathComponents[i]);
+        }
+        return content;
+    }
+
+
+    //SETTERS
+
+    public void setNotificacoes(ArrayList<String> notificacoes) {
+        this.notificacoes = notificacoes;
+    }
+
+    public void setFolderContent(Directory dir, Content conteudo) {
+        conteudo.setParent(dir);
+    }
+
+    public void setUsername(String username) throws InputException {
+        if (!Verificador.verificaString(username))
+            throw new EmptyStringException("Username");
+
+        this.username = username;
+    }
+
+    public void setEmail(String email) throws InputException {
+        if (!Verificador.verificaEmail(email))
+            throw new InvalidEmailException();
+
+        this.email = email;
+    }
+
+    public void setSenha(String password) throws InputException {
+        if (!Verificador.verificaString(password))
+            throw new EmptyStringException("Senha");
+
+        this.password = password;
+    }
 
     // EQUALS
     @Override
@@ -165,20 +186,11 @@ public class Usuario {
             if (usuario.getUsername().equals(this.getUsername())
                     && usuario.getEmail() == this.getEmail()) {
                 return true;
-
             } else {
-
                 return false;
             }
         }
         return false;
     }
 
-    public ArrayList<String> getNotificacoes() {
-        return notificacoes;
-    }
-
-    public void setNotificacoes(ArrayList<String> notificacoes) {
-        this.notificacoes = notificacoes;
-    }
 }

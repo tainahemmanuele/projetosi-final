@@ -13,6 +13,7 @@ public class Archive implements IArchive {
     private String type;
     private Directory parent;
     private Sharing compartilhamento;
+
     Usuario owner;
 
 
@@ -39,6 +40,30 @@ public class Archive implements IArchive {
     }
 
 
+    public void compartilhar(Usuario user, String tipo, String username) {
+        this.compartilhamento.addCompartilhamento(user, tipo);
+        user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName() +"."+ this.type);
+    }
+
+    public void sairCompartilhamento(Usuario user) {
+        this.compartilhamento.sairCompartilhamento(user);
+    }
+
+    public void cancelarCompartilhamento(String path) {
+        this.compartilhamento.limparCompartilhamento(path);
+    }
+
+
+    public boolean isDirectory(){
+        return false;
+    }
+
+    public boolean isShared() {
+        return this.compartilhamento.getStatus();
+    }
+
+
+    // GETTERS AND SETTERS
     public String getName(){
         return this.name;
     }
@@ -51,12 +76,12 @@ public class Archive implements IArchive {
         this.name = newName;
     }
 
-    public String getType(){
-        return this.type;
-    }
+    public String getType(){ return this.type; }
+
     public void setType(String newType){
         this.type = newType;
     }
+
     public String getText() {
         return this.text;
     }
@@ -97,27 +122,6 @@ public class Archive implements IArchive {
         } else {
             return this.parent.getPath() + "/" + getNameType();
         }
-    }
-
-    public boolean isDirectory(){
-        return false;
-    }
-
-    public boolean isShared() {
-        return this.compartilhamento.getStatus();
-    }
-
-    public void compartilhar(Usuario user, String tipo, String username) {
-        this.compartilhamento.addCompartilhamento(user, tipo);
-        user.getNotificacoes().add(username + " compartilhou o seguinte arquivo: " + this.getName() +"."+ this.type);
-    }
-
-    public void sairCompartilhamento(Usuario user) {
-        this.compartilhamento.sairCompartilhamento(user);
-    }
-
-    public void cancelarCompartilhamento(String path) {
-        this.compartilhamento.limparCompartilhamento(path);
     }
 
 

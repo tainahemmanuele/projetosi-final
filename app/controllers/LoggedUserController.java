@@ -26,18 +26,6 @@ public class LoggedUserController extends Controller {
         return openDirectory(loggedUser.getFolder().getPath());
     }
 
-    public Result openDirectory(String path) {
-        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Content content = loggedUser.getContent(path);
-        if(content.isDirectory()) {
-            session().remove("dir");
-            session().put("dir", content.getPath());
-            return ok(usuario.render(loggedUser));
-        } else
-            return badRequest("ERRO");
-    }
-
-
     public Result logout() {
         session().clear();
         return redirect(routes.Application.loginRender());
@@ -48,6 +36,16 @@ public class LoggedUserController extends Controller {
         return ok(editar.render(loggedUser));
     }
 
+    public Result openDirectory(String path) {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Content content = loggedUser.getContent(path);
+        if(content.isDirectory()) {
+            session().remove("dir");
+            session().put("dir", content.getPath());
+            return ok(usuario.render(loggedUser));
+        } else
+            return badRequest("ERRO");
+    }
     public Result editarConta() {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         FormularioEdicaoConta formularioEdicao = formFactory.form(FormularioEdicaoConta.class).bindFromRequest().get();
@@ -68,6 +66,30 @@ public class LoggedUserController extends Controller {
         return redirect(routes.LoggedUserController.index());
     }
 
+
+  // ----------- EDICAO DE DIRETORIOS -------------
+
+    public Result newDirRender() {
+        String path = session("dir");
+        return ok(newDirectory.render(path));
+    }
+    public Result newDirectory() {
+        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
+        Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
+        FormularioConteudo formularioConteudo = formFactory.form(FormularioConteudo.class).bindFromRequest().get();
+        try {
+            Directory newDirectory = new Directory(formularioConteudo.getName());
+            directory.addContent(newDirectory);
+        } catch (Exception e) {
+            flash("erroNew", e.getMessage());
+        }
+        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
+    }
+
+
+
+    // -------- EDICAO DE ARQUIVOS ---------
+
     public Result criarArquivoRender() {
         return ok(texto.render());
     }
@@ -80,24 +102,6 @@ public class LoggedUserController extends Controller {
             IArchive arquivo = new Archive(formularioConteudo.getName(), formularioConteudo.getType());
             directory.addContent(arquivo);
             arquivo.setOwner(loggedUser);
-        } catch (Exception e) {
-            flash("erroNew", e.getMessage());
-        }
-        return redirect(routes.LoggedUserController.openDirectory(session().get("dir")));
-    }
-
-    public Result newDirRender() {
-        String path = session("dir");
-        return ok(newDirectory.render(path));
-    }
-
-    public Result newDirectory() {
-        Usuario loggedUser = Application.getUsuarioEmail(session("email"));
-        Directory directory = (Directory) loggedUser.getContent(session().get("dir"));
-        FormularioConteudo formularioConteudo = formFactory.form(FormularioConteudo.class).bindFromRequest().get();
-        try {
-            Directory newDirectory = new Directory(formularioConteudo.getName());
-            directory.addContent(newDirectory);
         } catch (Exception e) {
             flash("erroNew", e.getMessage());
         }
@@ -129,12 +133,16 @@ public class LoggedUserController extends Controller {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
         IArchive archive = (IArchive) loggedUser.getContent(path);
         Directory folder = archive.getParent();
+
         if (archive.isShared()) {
             loggedUser.cancelarCompartilhamento(path);
         }
-        folder.delContent(archive);
+
+        loggedUser.removeArchive(path);
         return redirect(routes.LoggedUserController.openDirectory(folder.getPath()));
     }
+
+    // ---------------  COMPARTILHAMENTO -------------------
 
     public Result compartilharRender(String path) {
         Usuario loggedUser = Application.getUsuarioEmail(session("email"));
