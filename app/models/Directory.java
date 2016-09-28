@@ -101,6 +101,11 @@ public class Directory implements Content{
        return this.listArchive;
     }
 
+    public void setListArchive(List<IArchive> novaLista){
+        this.listArchive = novaLista;
+
+    }
+
     public String getName() {
         return name;
     }

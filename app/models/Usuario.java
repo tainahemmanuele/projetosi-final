@@ -17,12 +17,14 @@ public class Usuario {
 
     public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
     public static String SHARING_FOLDER_NAME = "Compartilhados";
+    public static String TRASH_BIN_NAME = "Lixeira";
 
     private String username;
     private String email;
     private String password;
     private Directory folder;
     private Directory compartilhados;
+    private Directory lixeira;
     private List<String> notificacoes;
     private List<IArchive> depositingGarbage;
 
@@ -32,9 +34,12 @@ public class Usuario {
         this.notificacoes = new ArrayList<String>();
         this.notificacoes.add("Bem vindo ao TextDropBox");
         this.depositingGarbage = new ArrayList<IArchive>();
-
+        this.lixeira = new Directory(TRASH_BIN_NAME);
+        this.lixeira.setListArchive(getDepositingGarbage());
         try {
             this.folder.addContent(compartilhados);
+            this.folder.addContent(lixeira);
+
         } catch (AlreadyExistingContentException e){
             throw new RuntimeException("Erro do sistema");
         }
@@ -52,8 +57,11 @@ public class Usuario {
         this.notificacoes = new ArrayList<String>();
         this.notificacoes.add("Bem vindo ao TextDropBox");
         this.depositingGarbage = new ArrayList<IArchive>();
+        this.lixeira = new Directory(TRASH_BIN_NAME);
+        this.lixeira.setListArchive(getDepositingGarbage());
         try {
             this.folder.addContent(compartilhados);
+            this.folder.addContent(lixeira);
         } catch (AlreadyExistingContentException e){
             throw new RuntimeException("Erro do sistema");
         }

@@ -142,6 +142,8 @@ public class LoggedUserController extends Controller {
         return redirect(routes.LoggedUserController.openDirectory(folder.getPath()));
     }
 
+
+
     // ---------------  COMPARTILHAMENTO -------------------
 
     public Result compartilharRender(String path) {
