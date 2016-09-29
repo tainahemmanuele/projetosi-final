@@ -18,9 +18,13 @@ public class Directory implements Content{
 
     @Id
     public Long id;
+    @Constraints.Required
     private String name;
+    @Constraints.Required
     private List<IArchive> listArchive;
+    @Constraints.Required
     private List<Directory> listDirectory;
+    @Constraints.Required
     private Directory parent;
 
     public Directory() {

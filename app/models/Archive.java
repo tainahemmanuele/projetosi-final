@@ -4,16 +4,28 @@ package models;
 import exceptions.EmptyStringException;
 import util.Verificador;
 
+import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 /**
  * Created by Suelany on 05/08/2016.
  */
+@Entity
 public class Archive implements IArchive {
+    @Id
+    public Long id;
+    @Constraints.Required
     private String name;
+    @Constraints.Required
     private String text;
+    @Constraints.Required
     private String type;
+    @Constraints.Required
     private Directory parent;
+    @Constraints.Required
     private Sharing compartilhamento;
 
+    @Constraints.Required
     Usuario owner;
 
 

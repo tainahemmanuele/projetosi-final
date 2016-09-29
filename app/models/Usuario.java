@@ -25,6 +25,7 @@ public class Usuario extends Model {
     public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
     public static String SHARING_FOLDER_NAME = "Compartilhados";
     public static String TRASH_BIN_NAME = "Lixeira";
+    public static Finder<Integer,Usuario> find = new Finder(Integer.class, Usuario.class);
 
     @Constraints.Required
     private String username;
@@ -81,6 +82,7 @@ public class Usuario extends Model {
             throw new RuntimeException("Erro do sistema");
         }
     }
+
 
     private void verify(String username, String email, String senha) throws InputException{
         if (!Verificador.verificaString(username) && !Verificador.verificaString(email) && !Verificador.verificaString(senha))

@@ -3,9 +3,20 @@ package models;
 /**
  * Created by João Marcos on 10/09/2016.
  */
+import javax.persistence.*;
+import javax.validation.Constraint;
+
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
+@Entity
 public class ArchiveLink implements IArchive {
 
+    @Id
+    public Long id;
+    @Constraints.Required
     private IArchive archive;
+    @Constraints.Required
     private Directory parent;
 
     public ArchiveLink(IArchive archive) {
