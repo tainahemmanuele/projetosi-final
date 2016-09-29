@@ -9,6 +9,7 @@ import util.FormularioCompartilhamento;
 import util.FormularioConteudo;
 import util.FormularioEdicaoConta;
 import views.html.*;
+import play.db.ebean.Model;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -195,5 +196,6 @@ public class LoggedUserController extends Controller {
         }
         return verArquivo(path);
     }
+
 
 }

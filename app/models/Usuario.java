@@ -10,22 +10,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
 /**
  * Created by Tainah Emmanuele on 24/07/2016.
  */
-public class Usuario {
+@Entity
+public class Usuario extends Model {
+    @Id
+    public Long id;
 
     public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
     public static String SHARING_FOLDER_NAME = "Compartilhados";
     public static String TRASH_BIN_NAME = "Lixeira";
 
+    @Constraints.Required
     private String username;
+    @Constraints.Required
     private String email;
+    @Constraints.Required
     private String password;
+    @Constraints.Required
     private Directory folder;
+    @Constraints.Required
     private Directory compartilhados;
+    @Constraints.Required
     private Directory lixeira;
+    @Constraints.Required
     private List<String> notificacoes;
+    @Constraints.Required
     private List<IArchive> depositingGarbage;
 
     public Usuario() throws EmptyStringException {

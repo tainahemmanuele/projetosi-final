@@ -32,8 +32,10 @@ public class CadastroController extends Controller {
     public Result cadastraUsuario() {
 
         try {
+
             FormularioCadastro formCadastro = formFactory.form(FormularioCadastro.class).bindFromRequest().get();
             Usuario usuario = new Usuario(formCadastro.getUsername(), formCadastro.getEmail(), formCadastro.getSenha());
+            
 
             try {
 

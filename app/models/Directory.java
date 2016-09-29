@@ -7,10 +7,17 @@ import util.Verificador;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 /**
  * Created by Suelany on 05/08/2016.
  */
+@Entity
 public class Directory implements Content{
+
+    @Id
+    public Long id;
     private String name;
     private List<IArchive> listArchive;
     private List<Directory> listDirectory;
