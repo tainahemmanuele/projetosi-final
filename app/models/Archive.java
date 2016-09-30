@@ -6,26 +6,23 @@ import util.Verificador;
 
 import javax.persistence.*;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
+//import play.db.ebean.Model;
 /**
  * Created by Suelany on 05/08/2016.
  */
 @Entity
 public class Archive extends Model implements IArchive {
     @Id
-    public Long id;
-    @Constraints.Required
+    public long id;
     private String name;
-    @Constraints.Required
     private String text;
-    @Constraints.Required
     private String type;
-    @Constraints.Required
+    @OneToMany (mappedBy = "usuario")
     private Directory parent;
-    @Constraints.Required
+    @OneToMany (mappedBy = "usuario")
     private Sharing compartilhamento;
-
-    @Constraints.Required
+    @ManyToOne (cascade = CascadeType.ALL)
     Usuario owner;
 
 

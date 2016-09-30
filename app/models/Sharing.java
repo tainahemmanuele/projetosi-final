@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -11,9 +12,14 @@ import play.db.ebean.Model;
 /**
  * Created by João Marcos on 08/09/2016.
  */
+@Entity
 public class Sharing extends Model {
 
+    @Id
+    public long id;
+    @Constraints.Required
     private List<Usuario> compartilhadoLeitura;
+    @Constraints.Required
     private List<Usuario> compartilhadoEdicao;
 
     public Sharing() {

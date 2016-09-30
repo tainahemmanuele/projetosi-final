@@ -17,7 +17,7 @@ import play.db.ebean.Model;
 public class Directory extends Model implements Content{
 
     @Id
-    public Long id;
+    public long id;
     @Constraints.Required
     private String name;
     @Constraints.Required

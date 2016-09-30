@@ -7,16 +7,17 @@ import javax.persistence.*;
 import javax.validation.Constraint;
 
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
+//import play.db.ebean.Model;
 
 @Entity
 public class ArchiveLink  extends Model implements IArchive {
 
     @Id
-    public Long id;
-    @Constraints.Required
+    public long id;
+    @ManyToOne (cascade = CascadeType.ALL)
     private IArchive archive;
-    @Constraints.Required
+    @OneToMany
     private Directory parent;
 
     public ArchiveLink(IArchive archive) {

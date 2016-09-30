@@ -12,36 +12,38 @@ import java.util.NoSuchElementException;
 
 import javax.persistence.*;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+import play.db.ebean.*;
+import com.avaje.ebean.Model;
+//import play.db.ebean.Model;
 
 /**
  * Created by Tainah Emmanuele on 24/07/2016.
  */
+
 @Entity
 public class Usuario extends Model {
+
+    private static final long serialVersionUID = 1L;
     @Id
-    public Long id;
+    public long id;
 
     public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
     public static String SHARING_FOLDER_NAME = "Compartilhados";
     public static String TRASH_BIN_NAME = "Lixeira";
-    public static Finder<Integer,Usuario> find = new Finder(Integer.class, Usuario.class);
+    public static Model.Finder<Long,Usuario> find = new Model.Finder<Long,Usuario>(Long.class, Usuario.class);
 
-    @Constraints.Required
     private String username;
-    @Constraints.Required
     private String email;
-    @Constraints.Required
     private String password;
-    @Constraints.Required
+    @OneToOne (mappedBy = "usuario")@JoinColumn
     private Directory folder;
-    @Constraints.Required
+    @OneToOne (mappedBy = "usuario")@JoinColumn
     private Directory compartilhados;
-    @Constraints.Required
+    @OneToOne (mappedBy = "usuario")@JoinColumn
     private Directory lixeira;
-    @Constraints.Required
+    @OneToMany (cascade = CascadeType.ALL)
     private List<String> notificacoes;
-    @Constraints.Required
+    @OneToMany (cascade = CascadeType.ALL)
     private List<IArchive> depositingGarbage;
 
     public Usuario() throws EmptyStringException {
@@ -161,6 +163,13 @@ public class Usuario extends Model {
         return notificacoes;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Content getContent(String path) {
         String[] pathComponents = path.split("/");
