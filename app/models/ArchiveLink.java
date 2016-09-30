@@ -10,7 +10,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 @Entity
-public class ArchiveLink implements IArchive {
+public class ArchiveLink  extends Model implements IArchive {
 
     @Id
     public Long id;

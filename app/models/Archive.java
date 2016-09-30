@@ -11,7 +11,7 @@ import play.db.ebean.Model;
  * Created by Suelany on 05/08/2016.
  */
 @Entity
-public class Archive implements IArchive {
+public class Archive extends Model implements IArchive {
     @Id
     public Long id;
     @Constraints.Required

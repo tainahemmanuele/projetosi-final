@@ -3,10 +3,15 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
 /**
  * Created by João Marcos on 08/09/2016.
  */
-public class Sharing {
+public class Sharing extends Model {
 
     private List<Usuario> compartilhadoLeitura;
     private List<Usuario> compartilhadoEdicao;
@@ -63,12 +68,13 @@ public class Sharing {
     public void limparCompartilhamento(String path) {
         for (Usuario user : this.compartilhadoLeitura) {
             user.getCompartilhados().delContent(user.getContent(path));
+            user.save();
         }
         for (Usuario user : this.compartilhadoEdicao) {
             user.getCompartilhados().delContent(user.getContent(path));
+            user.save();
         }
         this.compartilhadoEdicao = new ArrayList<Usuario>();
         this.compartilhadoLeitura = new ArrayList<Usuario>();
     }
-
 }

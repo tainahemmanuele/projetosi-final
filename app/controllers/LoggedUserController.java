@@ -58,6 +58,7 @@ public class LoggedUserController extends Controller {
                     loggedUser.setEmail(formularioEdicao.getEmail());
                     session("email", formularioEdicao.getEmail());
                     loggedUser.setSenha(formularioEdicao.getSenhaNova1());
+                    loggedUser.save();
                 } catch (InputException e) {
                     flash("erroEdit", e.getMessage());
                 }
@@ -82,6 +83,7 @@ public class LoggedUserController extends Controller {
         try {
             Directory newDirectory = new Directory(formularioConteudo.getName());
             directory.addContent(newDirectory);
+            loggedUser.save();
         } catch (Exception e) {
             flash("erroNew", e.getMessage());
         }
@@ -104,6 +106,7 @@ public class LoggedUserController extends Controller {
             IArchive arquivo = new Archive(formularioConteudo.getName(), formularioConteudo.getType());
             directory.addContent(arquivo);
             arquivo.setOwner(loggedUser);
+            loggedUser.save();
         } catch (Exception e) {
             flash("erroNew", e.getMessage());
         }
@@ -122,6 +125,7 @@ public class LoggedUserController extends Controller {
         IArchive archive = (IArchive) loggedUser.getContent(path);
         archive.setTexto(novoArquivo.getText());
         archive.setName(novoArquivo.getName());
+        loggedUser.save();
         return ok(viewTexto.render(archive, loggedUser));
     }
 
@@ -141,6 +145,7 @@ public class LoggedUserController extends Controller {
         }
 
         loggedUser.removeArchive(path);
+        loggedUser.save();
         return redirect(routes.LoggedUserController.openDirectory(folder.getPath()));
     }
 
@@ -162,6 +167,8 @@ public class LoggedUserController extends Controller {
             Usuario sharingUser = Application.getUsuarioEmail(formularioComp.getEmailUser());
             try {
                 loggedUser.compartilhar(sharingUser, formularioComp.getTipo(), path);
+                loggedUser.save();
+                sharingUser.save();
             } catch (AlreadyExistingContentException e) {
                 flash("repeticao","Ja existe um arquivo com esse nome sendo compartilhado.");
             }
@@ -174,8 +181,11 @@ public class LoggedUserController extends Controller {
         IArchive archive = (IArchive) loggedUser.getContent(path);
         if (archive.getOwner().equals(loggedUser)) {
             loggedUser.cancelarCompartilhamento(path);
+            loggedUser.save();
         } else {
             loggedUser.sairCompartilhamento(path);
+            archive.getOwner().save();
+            loggedUser.save();
         }
         return redirect(routes.LoggedUserController.openDirectory(archive.getParent().getPath()));
     }
@@ -194,6 +204,8 @@ public class LoggedUserController extends Controller {
             IArchive archive = (IArchive) loggedUser.getContent(path);
             String sharingPath = sharingUser.DEFAULT_FOLDER_NAME + "/" + sharingUser.SHARING_FOLDER_NAME + "/" + archive.getNameType();
             sharingUser.sairCompartilhamento(sharingPath);
+            loggedUser.save();
+            sharingUser.save();
         }
         return verArquivo(path);
     }
