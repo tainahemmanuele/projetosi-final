@@ -39,6 +39,7 @@ public class Application extends Controller {
     }
 
 
+
     public Result login(){
         FormularioLogin formLogin = formFactory.form(FormularioLogin.class).bindFromRequest().get();
         Usuario user = null;

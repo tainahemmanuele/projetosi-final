@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * Created by SauloSamuel on 29/07/2016.
  */
+@Security.Authenticated(ActionAuthentication.class)
 public class LoggedUserController extends Controller {
 
     @Inject
