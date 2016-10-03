@@ -8,16 +8,16 @@ import javax.validation.Constraint;
 
 import play.data.validation.Constraints;
 import com.avaje.ebean.Model;
-//import play.db.ebean.Model;
 
-@Entity
+
+
 public class ArchiveLink  extends Model implements IArchive {
 
     @Id
     public long id;
-    @ManyToOne (cascade = CascadeType.ALL)
+    @Transient
     private IArchive archive;
-    @OneToMany
+    @OneToOne
     private Directory parent;
 
     public ArchiveLink(IArchive archive) {

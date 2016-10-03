@@ -17,9 +17,9 @@ public class Sharing extends Model {
 
     @Id
     public long id;
-    @Constraints.Required
+    @ManyToMany
     private List<Usuario> compartilhadoLeitura;
-    @Constraints.Required
+    @ManyToMany
     private List<Usuario> compartilhadoEdicao;
 
     public Sharing() {

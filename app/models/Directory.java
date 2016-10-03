@@ -18,13 +18,12 @@ public class Directory extends Model implements Content{
 
     @Id
     public long id;
-    @Constraints.Required
     private String name;
-    @Constraints.Required
+    @Transient
     private List<IArchive> listArchive;
-    @Constraints.Required
+    @ManyToMany
     private List<Directory> listDirectory;
-    @Constraints.Required
+    @OneToOne
     private Directory parent;
 
     public Directory() {

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.persistence.*;
+import javax.transaction.TransactionScoped;
+
 import play.data.validation.Constraints;
 import play.db.ebean.*;
 import com.avaje.ebean.Model;
@@ -35,15 +37,15 @@ public class Usuario extends Model {
     private String username;
     private String email;
     private String password;
-    @OneToOne (mappedBy = "usuario")@JoinColumn
+    @ManyToOne
     private Directory folder;
-    @OneToOne (mappedBy = "usuario")@JoinColumn
+    @ManyToOne
     private Directory compartilhados;
     @OneToOne (mappedBy = "usuario")@JoinColumn
     private Directory lixeira;
-    @OneToMany (cascade = CascadeType.ALL)
+    @ElementCollection
     private List<String> notificacoes;
-    @OneToMany (cascade = CascadeType.ALL)
+    @Transient
     private List<IArchive> depositingGarbage;
 
     public Usuario() throws EmptyStringException {
@@ -83,6 +85,7 @@ public class Usuario extends Model {
         } catch (AlreadyExistingContentException e){
             throw new RuntimeException("Erro do sistema");
         }
+
     }
 
 

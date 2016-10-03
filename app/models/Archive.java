@@ -18,9 +18,9 @@ public class Archive extends Model implements IArchive {
     private String name;
     private String text;
     private String type;
-    @OneToMany (mappedBy = "usuario")
+    @OneToOne (mappedBy = "usuario")
     private Directory parent;
-    @OneToMany (mappedBy = "usuario")
+    @OneToOne (mappedBy = "usuario")
     private Sharing compartilhamento;
     @ManyToOne (cascade = CascadeType.ALL)
     Usuario owner;
