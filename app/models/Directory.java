@@ -4,6 +4,7 @@ import exceptions.AlreadyExistingContentException;
 import exceptions.EmptyStringException;
 import util.Verificador;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import play.db.ebean.Model;
  * Created by Suelany on 05/08/2016.
  */
 @Entity
-public class Directory extends Model implements Content{
+public class Directory extends Model implements Content, Serializable{
 
     @Id
     public long id;

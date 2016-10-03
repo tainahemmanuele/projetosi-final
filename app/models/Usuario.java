@@ -17,13 +17,13 @@ import play.data.validation.Constraints;
 import play.db.ebean.*;
 import com.avaje.ebean.Model;
 //import play.db.ebean.Model;
-
+import java.io.Serializable;
 /**
  * Created by Tainah Emmanuele on 24/07/2016.
  */
 
 @Entity
-public class Usuario extends Model {
+public class Usuario extends Model implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

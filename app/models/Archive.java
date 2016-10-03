@@ -7,12 +7,14 @@ import util.Verificador;
 import javax.persistence.*;
 import play.data.validation.Constraints;
 import com.avaje.ebean.Model;
+
+import java.io.Serializable;
 //import play.db.ebean.Model;
 /**
  * Created by Suelany on 05/08/2016.
  */
 @Entity
-public class Archive extends Model implements IArchive {
+public class Archive extends Model implements IArchive, Serializable {
     @Id
     public long id;
     private String name;

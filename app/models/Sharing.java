@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import play.db.ebean.Model;
  * Created by João Marcos on 08/09/2016.
  */
 @Entity
-public class Sharing extends Model {
+public class Sharing extends Model implements Serializable{
 
     @Id
     public long id;

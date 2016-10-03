@@ -9,9 +9,10 @@ import javax.validation.Constraint;
 import play.data.validation.Constraints;
 import com.avaje.ebean.Model;
 
+import java.io.Serializable;
 
 
-public class ArchiveLink  extends Model implements IArchive {
+public class ArchiveLink  extends Model implements IArchive,Serializable {
 
     @Id
     public long id;
