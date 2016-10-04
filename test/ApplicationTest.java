@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import exceptions.EmptyStringException;
+import exceptions.InputException;
+import models.Usuario;
 import org.junit.*;
 
 import play.mvc.*;
@@ -14,6 +17,7 @@ import play.data.validation.Constraints.RequiredValidator;
 import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
+import views.html.helper.input;
 
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
@@ -21,16 +25,29 @@ import static org.hamcrest.CoreMatchers.*;
 
 
 /**
-*
-* Simple (JUnit) tests that can call all parts of a play app.
-* If you are interested in mocking a whole application, see the wiki for more details.
-*
+*Created by Elvis Victor 02/10/2016
 */
 public class ApplicationTest {
 
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a, equalTo(2));
+    Usuario usuarioPadrao;
+
+    @Before
+    public void InitializationVariable () throws InputException {
+        usuarioPadrao = new Usuario("Elvis","","");
     }
+
+    @Test
+    public void  TestsUsuarioNull (){
+        Usuario UsuarioNulo = null;
+        try {
+
+            UsuarioNulo =  new Usuario("","","");
+            fail("Usuario e nulo");
+        } catch (InputException e) {
+
+            assertNull(e.getMessage(),UsuarioNulo);
+
+        }
+    }
+
 }
