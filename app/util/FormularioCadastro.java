@@ -1,9 +1,11 @@
 package util;
 
+import java.io.Serializable;
+
 /**
  * Created by Tainah Emmanuele on 24/08/2016.
  */
-public class FormularioCadastro {
+public class FormularioCadastro implements Serializable {
     private String username;
     private String email;
     private String senha;
