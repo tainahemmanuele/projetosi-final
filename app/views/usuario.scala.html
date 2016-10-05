@@ -26,7 +26,7 @@
                     @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
                         @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).getName.equals(Usuario.TRASH_BIN_NAME)) {
                             <li>@archive.getNameType</li>
-                        }else {
+                        } else {
                             <li><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getNameType <br /> </a></li>
                         }
                     }
@@ -49,7 +49,7 @@
                     </button>
                 }
 
-                @if(!(user.getContent(session().get("dir")).equals(user.getCompartilhados))) {
+                @if(!(user.getContent(session().get("dir")).equals(user.getCompartilhados))&& !(user.getContent(session().get("dir")).equals(user.getLixeira))) {
                     <button formmethod="get" class="btn btn-primary btn-md" formaction="@routes.LoggedUserController.criarArquivoRender()" type="submit">
                         Novo Arquivo
                     </button>

@@ -18,6 +18,7 @@ import play.db.ebean.*;
 import com.avaje.ebean.Model;
 //import play.db.ebean.Model;
 import java.io.Serializable;
+
 /**
  * Created by Tainah Emmanuele on 24/07/2016.
  */
@@ -32,7 +33,7 @@ public class Usuario extends Model implements Serializable {
     public static String DEFAULT_FOLDER_NAME = "Pasta Pessoal";
     public static String SHARING_FOLDER_NAME = "Compartilhados";
     public static String TRASH_BIN_NAME = "Lixeira";
-    public static Model.Finder<Long,Usuario> find = new Model.Finder<Long,Usuario>(Long.class, Usuario.class);
+    public static Model.Finder<Long, Usuario> find = new Model.Finder<Long, Usuario>(Long.class, Usuario.class);
 
     private String username;
     private String email;
@@ -41,7 +42,8 @@ public class Usuario extends Model implements Serializable {
     private Directory folder;
     @ManyToOne
     private Directory compartilhados;
-    @OneToOne (mappedBy = "usuario")@JoinColumn
+    @OneToOne(mappedBy = "usuario")
+    @JoinColumn
     private Directory lixeira;
     @ElementCollection
     private List<String> notificacoes;
@@ -60,7 +62,7 @@ public class Usuario extends Model implements Serializable {
             this.folder.addContent(compartilhados);
             this.folder.addContent(lixeira);
 
-        } catch (AlreadyExistingContentException e){
+        } catch (AlreadyExistingContentException e) {
             throw new RuntimeException("Erro do sistema");
         }
     }
@@ -82,21 +84,21 @@ public class Usuario extends Model implements Serializable {
         try {
             this.folder.addContent(compartilhados);
             this.folder.addContent(lixeira);
-        } catch (AlreadyExistingContentException e){
+        } catch (AlreadyExistingContentException e) {
             throw new RuntimeException("Erro do sistema");
         }
 
     }
 
 
-    private void verify(String username, String email, String senha) throws InputException{
+    private void verify(String username, String email, String senha) throws InputException {
         if (!Verificador.verificaString(username) && !Verificador.verificaString(email) && !Verificador.verificaString(senha))
             throw new EmptyStringException();
-        if(!Verificador.verificaString(username) && !Verificador.verificaString(email))
+        if (!Verificador.verificaString(username) && !Verificador.verificaString(email))
             throw new EmptyStringException("Username", "Email");
-        if(!Verificador.verificaString(username) && !Verificador.verificaString(senha))
+        if (!Verificador.verificaString(username) && !Verificador.verificaString(senha))
             throw new EmptyStringException("Username", "Senha");
-        if(!Verificador.verificaString(email) && !Verificador.verificaString(senha))
+        if (!Verificador.verificaString(email) && !Verificador.verificaString(senha))
             throw new EmptyStringException("Email", "Senha");
         if (!Verificador.verificaString(username))
             throw new EmptyStringException("Username");
@@ -112,7 +114,7 @@ public class Usuario extends Model implements Serializable {
         Content arquivo = getContent(path);
         if (!(arquivo.isDirectory()) && !(user.getCompartilhados().hasArchive((IArchive) arquivo))) {
             ((IArchive) arquivo).compartilhar(user, tipo, this.getUsername());
-            ArchiveLink linkArchive = new ArchiveLink((IArchive)arquivo);
+            ArchiveLink linkArchive = new ArchiveLink((IArchive) arquivo);
             user.getCompartilhados().addContent(linkArchive);
         }
     }
@@ -132,7 +134,7 @@ public class Usuario extends Model implements Serializable {
         archive.cancelarCompartilhamento(sharingPath);
     }
 
-    public void removeArchive(String path){
+    public void removeArchive(String path) {
         IArchive archive = (IArchive) getContent(path);
         Directory parent = archive.getParent();
         //Adiciona na lixeira
@@ -142,25 +144,37 @@ public class Usuario extends Model implements Serializable {
     }
 
     //GETTERS
-    public List<IArchive> getDepositingGarbage(){ return this.depositingGarbage; }
+    public List<IArchive> getDepositingGarbage() {
+        return this.depositingGarbage;
+    }
 
-    public List<IArchive> getArchives() { return this.folder.getListArchive(); }
+    public List<IArchive> getArchives() {
+        return this.folder.getListArchive();
+    }
 
-    public List<Directory> getDirectory() { return this.folder.getListDirectory(); }
+    public List<Directory> getDirectory() {
+        return this.folder.getListDirectory();
+    }
 
     public Directory getCompartilhados() {
         return this.compartilhados;
     }
 
-    public String getEmail() { return this.email; }
+    public String getEmail() {
+        return this.email;
+    }
 
     public String getUsername() {
         return username;
     }
 
-    public Directory getFolder() { return this.folder; }
+    public Directory getFolder() {
+        return this.folder;
+    }
 
-    public String getSenha() { return password; }
+    public String getSenha() {
+        return password;
+    }
 
     public List<String> getNotificacoes() {
         return notificacoes;
@@ -230,4 +244,11 @@ public class Usuario extends Model implements Serializable {
         return false;
     }
 
+    public Directory getLixeira() {
+        return lixeira;
+    }
+
+    public void setLixeira(Directory lixeira) {
+        this.lixeira = lixeira;
+    }
 }
