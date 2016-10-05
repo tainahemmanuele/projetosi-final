@@ -24,7 +24,11 @@
             } else {
                 <ul style="border: #000000">
                     @for(archive <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListArchive()) {
-                        <li><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getNameType <br /> </a></li>
+                        @if((user.getContent(session().get("dir")).asInstanceOf[Directory]).getName.equals(Usuario.TRASH_BIN_NAME)) {
+                            <li>@archive.getNameType</li>
+                        }else {
+                            <li><a href="@routes.LoggedUserController.verArquivo(archive.getPath)"> @archive.getNameType <br /> </a></li>
+                        }
                     }
                     @for(dir <- (user.getContent(session().get("dir")).asInstanceOf[Directory]).getListDirectory()) {
                         <li><a href="@routes.LoggedUserController.openDirectory(dir.getPath)">
